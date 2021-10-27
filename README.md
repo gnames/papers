@@ -10,10 +10,11 @@ alias pps="cd ~/papers && vi -c NotesLayout"
 
 ## Using [guard] for automatic PDF compiling
 
-1. Install full latex package for your OS
-2. Go to `papers` directory (see the alias above).
-3. Run `bundle` command from the root to install required gems
-4. Set a script `$HOME/bin/pdcit` in your execution path
+1. Install full `latex` package for your OS
+2. Install `pandoc` and its dependencies
+3. Go to `papers` directory (see the alias above).
+4. Run `bundle` command from the root to install required gems
+5. Set a script `$HOME/bin/pdcit` in your execution path
 
 An example of `pdcit`:
 
