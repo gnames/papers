@@ -25,6 +25,7 @@ file=$(basename ${1} ".md")
 cd ${path}
 pandoc -C -s "${file}.md" --pdf-engine=xelatex --highlight-style \
   zenburn -o "${file}.pdf"
+pandoc -C -s "${file}.md" -o "${file}.tex"
 cd -
 ```
 
