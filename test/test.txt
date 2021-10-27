@@ -1,0 +1,72 @@
+
+unicodehyperref
+hyphensurl
+
+       
+
+    Scale=MatchLowercase
+  []Ligatures=TeX,Scale=1
+
+upquote.sty
+microtype.sty
+    [protrusion]basicmath 
+
+KOMAClassName
+  parskip.sty
+      
+        
+
+  parskip=half
+xurl.sty 
+bookmark.sty
+
+
+
+
+same 
+ 
+
+  
+ 
+ 
+
+
+
+
+
+
+
+
+    
+
+Paper generation via Pandoc
+Bubo bubo
+2021-10-27
+
+
+abstract
+Abstract
+
+Lorem ipsum
+
+background
+1. Background
+
+Some background here [1] trying to use paper here.
+
+acnowlegements
+Acnowlegements
+
+Thanks you all
+
+bibliography
+Bibliography
+
+refs
+00
+preref-ICPN
+1. 
+Cantino, P.D., de Queiroz, K. (2010) International Code
+of Phylogenetic Nomenclature. 1-102.
+
+

@@ -20,8 +20,6 @@ Lorem ipsum
 Some background here  [@ICPN] trying to use a ref here. Some more refs
 [@Kluyver2013;@ICZN;@ICTV] and then again ref [@ICPN;@FNA2002].
 
-Testing
-
 # Acknowledgements
 
 Thanks to you all
