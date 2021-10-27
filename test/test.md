@@ -1,6 +1,6 @@
 ---
 title: Paper generation via Pandoc
-author: Bubo bubo
+author: John Doe, Jane Doe
 date: 2021-10-27
 csl: refs.csl
 bibliography: refs.bib
@@ -18,12 +18,12 @@ Lorem ipsum
 # 1. Background
 
 Some background here  [@ICPN] trying to use a ref here. Some more refs
-[@Kluyver2013] and then again ref [@ICPN].
+[@Kluyver2013;@ICZN;@ICTV] and then again ref [@ICPN;@FNA2002].
 
 Testing
 
 # Acknowledgements
 
-Thanks you all
+Thanks to you all
 
 # Bibliography

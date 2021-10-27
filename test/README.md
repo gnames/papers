@@ -23,6 +23,16 @@ pandoc -C -s test.md -o test.tex
 pandoc -C -s test.md -o test.pdf
 ```
 
+### Generate text from Latex
+
+```bash
+detex test.tex > test.txt
+# or
+pdftotext test.pdf > test.txt
+# or even
+gnfinder -I test.pdf > test.txt
+```
+
 [Mendeley]: https://csl.mendeley.com/searchByExample/
 [Journal of Tropical Science]: http://www.zotero.org/styles/journal-of-tropical-life-science
 
