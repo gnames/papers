@@ -24,7 +24,7 @@ Some background here  [@ICPN] trying to use a ref here. Some more refs
 
 # Project description
 
-Title: 
+Title:
 
 Study area description: Earth
 
