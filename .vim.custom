@@ -22,8 +22,8 @@ function! NotesLayout()
     resize 30
     wincmd l
     vertical resize 84
-    edit test/test.md
-    tabe test/test.tex
+    edit bdj-pensoft/bdj-template.md
+    tabe bdj-pensoft/bdj-template.tex
     vsp term://bash
     wincmd l
     vertical resize 84

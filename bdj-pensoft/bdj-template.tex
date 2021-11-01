@@ -1,0 +1,180 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Biodiversity Data Journal Template},
+  pdfauthor={John Doe, Jane Doe},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=2cm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\hypersetup{colorlinks=false, allbordercolors={0.6 0.6 1}, pdfborderstyle={/S/U/W 0.5}}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Biodiversity Data Journal Template}
+\author{John Doe, Jane Doe}
+\date{2021-10-27}
+
+\begin{document}
+\maketitle
+
+\hypertarget{abstract}{%
+\section{Abstract}\label{abstract}}
+
+\hypertarget{background}{%
+\subsection{Background}\label{background}}
+
+\hypertarget{new-information}{%
+\subsection{New information}\label{new-information}}
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Some background here {[}1{]} trying to use a ref here. Some more refs
+{[}3--5{]} and then again ref {[}1, 2{]}.
+
+\hypertarget{project-description}{%
+\section{Project description}\label{project-description}}
+
+Title:
+
+Study area description: Earth
+
+\hypertarget{web-location-uris}{%
+\section{Web location (URIs)}\label{web-location-uris}}
+
+Homepage:
+
+Download page:
+
+\hypertarget{technical-specification}{%
+\section{Technical specification}\label{technical-specification}}
+
+\hypertarget{repository}{%
+\section{Repository}\label{repository}}
+
+\hypertarget{usage-license}{%
+\section{Usage license}\label{usage-license}}
+
+\hypertarget{implementation}{%
+\section{Implementation}\label{implementation}}
+
+\hypertarget{additional-information}{%
+\section{Additional information}\label{additional-information}}
+
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
+
+Thanks to you all
+
+\hypertarget{author-contributions}{%
+\section{Author contributions}\label{author-contributions}}
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\hypertarget{supplementary-material}{%
+\section{Supplementary material}\label{supplementary-material}}
+
+\hypertarget{endnotes}{%
+\section*{Endnotes}\label{endnotes}}
+\addcontentsline{toc}{section}{Endnotes}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{0}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-ICPN}{}}%
+\CSLLeftMargin{1. }
+\CSLRightInline{Cantino, P.D., de Queiroz, K. (2010) {International Code
+of Phylogenetic Nomenclature}. 1--102.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-FNA2002}{}}%
+\CSLLeftMargin{2. }
+\CSLRightInline{Flora of North America Editorial Committee Eds (2002)
+{Flora of North America. Vol. 23, Magnoliophyta: Commelinidae (in part):
+Cyperaceae}. 551.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-ICZN}{}}%
+\CSLLeftMargin{3. }
+\CSLRightInline{International Commission on Zoological Nomenclature
+(1999) {International Code of Zoological Nomenclature}, Forth. 1--336.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-ICTV}{}}%
+\CSLLeftMargin{4. }
+\CSLRightInline{King, A.M.Q., Adams, M.J., Carstens, E.B., Lefkowitz,
+E.J. Eds (2011) {Virus taxonomy: classification and nomenclature of
+viruses: Ninth Report of the International Committee on Taxonomy of
+Viruses.} 1--1338.}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Kluyver2013}{}}%
+\CSLLeftMargin{5. }
+\CSLRightInline{Kluyver TA, Osborne CP (2013) Taxonome: A software
+package for linking biological species data. Ecology and Evolution 3
+(5): 1262--1265. doi:
+\href{https://doi.org/10.1002/ece3.529}{10.1002/ece3.529}.}
+
+\end{CSLReferences}
+
+\end{document}
