@@ -15,9 +15,33 @@ header-includes:
 
 ## Background
 
+Lorem
+
 ## New information
 
+This is new
+
+# Keywords
+
+biodiversity, software
+
+# Classifications
+
+## Taxon Classification
+
+Animalia, Plantae
+
+## Subject classification
+
+Bioinformatics
+
+# Funder
+
+Species File Group...
+
 # Introduction
+
+(Can have subsections)
 
 Some background here  [@ICPN] trying to use a ref here. Some more refs
 [@Kluyver2013;@ICZN;@ICTV] and then again ref [@ICPN;@FNA2002].
@@ -28,20 +52,61 @@ Title:
 
 Study area description: Earth
 
+Design description:
+
+Funding:
 
 # Web location (URIs)
 
 Homepage:
 
+Wiki:
+
 Download page:
+
+Download mirror:
+
+Bug database:
+
+Mailing list:
+
+Blog:
+
+Vendor:
 
 # Technical specification
 
+Platform:
+
+Programming language:
+
+Operatin system:
+
+Interface language:
+
+Service endpoint:
+
 # Repository
+
+Type: Git
+
+Browse URI:
+
+Location:
+
+Module:
+
+Anonymous root:
 
 # Usage license
 
+MIT
+
 # Implementation
+
+Implements specification:
+
+Audience:
 
 # Additional information
 
@@ -52,6 +117,10 @@ Thanks to you all
 # Author contributions
 
 # References
+
+# Figures
+
+# Tables
 
 # Supplementary material
 
