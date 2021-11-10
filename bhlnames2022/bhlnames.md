@@ -55,13 +55,13 @@ Species File Group, BHL index
   ~ 100mil name-strings (lexial layer)
   ~ 7mil names (nomenclatural layer)
   ~ 2.5mil taxons
-* CoL
-  - exists since ?
-  - goal all species (global scope)
-  - covers taxonomy and, to a degree, nomenclatural layers
-  - has ~4mil name-strings, ~2m taxons
-  - about ?% of name-strings have references
-  - taxon/synonymy info allows to find connection from name to taxon to synonyms
+
+The Catalogue of Life (CoL) project was established in 2000 with the goal of developing a global checklist of all species [Bisby2000].
+As of this writing, CoL contains over 2 million species with 1.6 million synonyms.
+CoL additionally has 1.6 million synonym names, which enables finding species using either the currently accepted scientific name or historical names.
+For example, synonyms can result from species being moved to a different genus, or duplicate descriptions of the same taxon being resolved.
+Of the 3.7 million scientific names in CoL, only XXX% have nomenclatural references to the species description in the literature.
+
 
 Biodiversity Heritage Library (BHL) is the largest open access collection of
 biodiversity literature.
