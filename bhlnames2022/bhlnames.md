@@ -63,8 +63,7 @@ Species File Group, BHL index
   - about ?% of name-strings have references
   - taxon/synonymy info allows to find connection from name to taxon to synonyms
 
-Biodiversity Heritage Library (BHL) is the largest open access collection of
-biodiversity literature.
+Biodiversity Heritage Library (BHL) is the largest open access collection of biodiversity literature.
 BHL was founded in 2006 and is goverened by an internetional consortium.
 BHL currently comprises of 270 thousand volumes and 60 million pages of biodiversity texts.
 By far the best way to discover biodiversity information in BHL is by searching for scintific names of organisms.
@@ -73,8 +72,7 @@ The index of scientific names for BHL is created by Global Names Architecture (G
 The purpose of GNA is creation of services and tools that allow to globally connect biodiversity information and research via scientific names.
 GNA was founded in 2007 and includes nomenclatural (ZooBank, a zoological names registrator) and lexical tools (GNparser, GNverifier, GNfinder).
 GNfinder detects scientific names in texts.
-GNparser normalizes scientific name-strings and extracts semantic meanings of
-their components.
+GNparser normalizes scientific name-strings and extracts semantic meanings of their components.
 Normalised scientific names allow to aggregate lexical variants of a name into a lexical group.
 GNverifier allows to search a name-string of interest in more than 100 sources of biodiversity data.
 GNverifier uses data from Catalogue of Life, Encyclopedia of Life, Index Fungorum, Global Biodiversity Information Facility and many others.
@@ -87,33 +85,42 @@ Later these names are verified (reconciled and resolved) via GNverifier.
 The process is quite fast and allows to process 60 millions of BHL pages in about 12 hours on a modern laptop.
 The efficiency of the index creation allows to incrementally improve algorithms and quality of the name-finding.
 GNverifier also provides metadata for each volume, calculating its biological "context".
-Such information includes the kingdom which contains most of the names found
-in a volume, as well as the lowest clade that contains more than half of
-the volume' names.
+Such information includes the kingdom which contains most of the names found in a volume, as well as the lowest clade that contains more than half of the volume' names.
 The calculation uses managerial classification of the Catalogue of Life.
 
-* ~3 names per taxon, examples: like "Puma concolor", "Felis concolor" etc
-  - finding all information about species is hard, because of changing names
-* Hard to find a paper in BHL by having a citation (especially automatically)
-  - not enough meta information
-  - metadata problems: year, page, volume information are "strings", meaning they need to be parsed
-    to compare with numbers
-  - sometimes metadata is misleading (example?) missing
-  - citations parsing is hard
-  - inconsistent journal abbreviation and naming in different sources
-* Hard to find nomenclatural events from name and citation
-  - citation look above
-  - name: OCR errors can change name,
-  - name might exist but on a different page (like book index etc...)
-  - name: annotations (sp.nov.,  comb. nov etc are not consistent)
-  - name: abbreviated name problem (not solved yet)
+Searching BHL for a particular name in the name index would often miss a significant amount of data because taxons' names do change with time.
+CoL currently contains ~4 million names, for ~2 million taxons.
+The database of GNverifier contains 8 million canonical forms, for ~2.5 million known taxons.
+From this data we can estimate that there are 2-3 names per a taxon on average.
+It means that to get more comprehensive data about species it is important to search not only by one name, but by all names used for the species historically.
 
-* Solution to these problems
-  * use COL data that connects name-strin to ref.
-  * use CoL accepted/synonym information to get connect names-string to taxon
-  * use name index in BHL together with COL data to solve these 3 problems.
+Another way to aquire information from BHL is by searching for a particular paper.
+Thanks to BioStore effort metainformation and location is known for 200 000? papers in BHL. However to find a paper by a citation is still hard, especially automatically by a script.
+There is a large variety of lexical variants for every journal name (FIG).
+Format of data about the year of publication, a journal volume, pages differs from one citation to the next.
+It is much easier to search for a year, volume and page data as numbers, but in BHL such metadata is stored as a string and is not consistent throghout the corpus.
+Quite often such metadata is missing, or contains mistakes and it makes the search harder.
 
-* BHLnames project tries to solve these problems using aforementioned stuff
+TODO: Fig: examples of journal name different spellings
+
+If a researcher has a citation of a nomenclatural event and tries to find the paper with original description of species, it is often not a trivial task.
+Citations are hard to match to pages in BHL as described above.
+Sometimes OCR errors change a name spelling and as a result exist in a volume under different spelling variants.
+Quite often people add an annotation next to new species or combination, such as sp.nov, comb nov.
+
+However such annotations are not consistent (FIG), and also often modified by OCR.
+When several species of the same genus are described, the genus in the name is often abbreviated, which also masks the name from a researcher.
+
+TODO: Fig: examples for annotations
+
+The project we describe in this paper helps to adress these problems with the following solutions.
+BHLnames uses name index, CoL data, and BHL metadata together to improve search of an information connected to a name-string, match a citation to a page in BHL, find pages that contain original descriptions of species..
+BHLnames uses CoL synonymy data to optionally expand name search to all its synonyms.
+BHLnames normalizes BHL data for publication years and pages, making it easier to compare it with numeric representations of years and pages.
+The project uses 2? million citations of nomenclatural events for names in CoL to provide data about nomenclatural events.
+BHLnames normalizes journal names in a citation and BHL to match them together.
+We use Naive Bayes approach to calculate probabilities of a citation to a BHL page match and return the best results.
+Such results are provided via Dryad (Link)
 
 # Project description
 
@@ -176,6 +183,9 @@ BHL users
 (Discussion)
 
 ## Conclusions
+
+- Jigsaw puzzle where a name is the first piece.
+- We add more pieces
 
 Advantages, impact
 
