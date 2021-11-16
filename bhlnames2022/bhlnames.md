@@ -133,6 +133,27 @@ Design description: This is the whole paper actually (?)
 
 ## Goals
 
+The goals of BHLnames project are:
+
+1. Provide an ability to search for a citation in BHL using citation metadata
+and the index of names data.
+
+    Use names' index information to dramatically simplify search for a publication.
+    Combine citation metadata together with occurences of a name to point to possible pages of a citation with high probability.
+
+2. Discover original descriptions and nomenclatural events in BHL.
+
+    Use the goal #1 together with citation and name information from CoL.
+    Combine these data to determine pages containing nomenclatural events for scientific names.
+    Increase usability of BHL for biodiversity reseearchers by augmenting scientific names index with the nomenclatural events index.
+
+3. Add "taxonomic intalligence" to the BHL's index of scientific names.
+
+    Use goal #2 and the CoL data to optionally expand BHL name search with taxonomical information.
+    Return data not only for a particular name, but for its synonyms.
+    Provide data about currently accepted name for the taxa.
+    Also, when available, provide data about nomenclatural events for all relevant names.
+
 (Methods)
 
 ## Architecuture
