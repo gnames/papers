@@ -287,20 +287,77 @@ The goals of BHLnames project are:
 
 (Methods)
 
-\hypertarget{architecuture}{%
-\subsection{Architecuture}\label{architecuture}}
+\hypertarget{technical-introduction}{%
+\subsection{Technical introduction}\label{technical-introduction}}
+
+BHLnames an Open Source project written in Go and JavaScript. It can be
+used independently by anybody with Internet connection and a write
+access to a PostgreSQL database. It consists of one stand-alone file and
+requires no additional dynamic libraries. The file can be downloaded at
+(GitHub link)
+
+BHLnames requires a substantial initialization stage. After
+initialization it can be used in off-line mode.
+
+\hypertarget{architecture}{%
+\subsection{Architecture}\label{architecture}}
+
+BHLnames' code structure mostly uses Clean Architecture principles for
+organisation of its modules. The main use-case functinality is defined
+in an in an interface (Link?).
+
+The core (entity) modules that do not require I/O interactions with a
+database, internet or local storate, are located in `ent' directory. The
+`ent' directory also contains interfaces implemented by modules that
+need I/O access. Such approach uncouples core modules from particular
+implementations of external I/O processes and provides flexibility for
+changing ways of storing and accessing the data.
+
+The modules that require access to database, internet, interfaces to
+users, accesses to frameworks implement entity interfaces and depend on
+the main use-case interface for providing functionality of BHLnames. One
+exception to this rule is `bhlnames' directory that contains
+command-line interface to the project.
+
+There are 3 different kinds of user-interfaces:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Command-line application starts and stops the web-service or provides
+  BHLnames functionality via terminal window.
+\item
+  RESTful API provides endpoints for remote access to BHLnames
+  functionality via HTTP calls.
+\item
+  Web-interface allows remote interactive access BHLnames users via
+  Internet.
+\end{enumerate}
 
 \hypertarget{dependencies}{%
 \subsubsection{Dependencies}\label{dependencies}}
 
-\hypertarget{project-structure}{%
-\subsubsection{Project structure}\label{project-structure}}
+Initialization phase of the projct requires a remote access to remote
+data-dump of BHL located at (LINK). Also it needs an access to a RESTful
+inteface of BHLindex application.
+
+BHLindex is an Open Source application written in Go that creates
+scientific names index of BHL. The application scans BHL's 60 million
+pages, detects scientific names and provides data about their occurences
+via RESTful interface. It is possible to use publicly available URL that
+serves BHLindex API at (LINK).
+
+There are many dependencies on Go modules, some of them written
+specifically for Global Names project. We will talk about some of GN
+modules further. Go dependencies are required only during the
+compilation of the project and are not needed for running BHLnames
+service or command-line application.
 
 \hypertarget{workflow}{%
-\subsubsection{Workflow}\label{workflow}}
+\subsection{Workflow}\label{workflow}}
 
 \hypertarget{data-import}{%
-\paragraph{Data Import}\label{data-import}}
+\subsubsection{Data Import}\label{data-import}}
 
 \hypertarget{interfaces}{%
 \subsection{Interfaces}\label{interfaces}}
