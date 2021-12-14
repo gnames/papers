@@ -59,32 +59,32 @@ Species File Group, BHL index
 The Catalogue of Life (CoL) project was established in 2000 with the goal of developing a global species checklist of all currently accepted scientific names [@Bisby2000].
 As of this writing, CoL contains over 2 million accepted species.
 CoL additionally tracks historical scientific names that are no longer accepted and contains 1.6 million of these synonyms, which enables finding species using either the currently accepted scientific name or their historical names.
-Of the 3.7 million scientific names in CoL, only 53% have nomenclatural references to the original species description in the literature.
+Of the 3.7 million scientific names in CoL, 53% have nomenclatural references to the original species description in the literature.
 
 Biodiversity Heritage Library (BHL) is the largest open access collection of biodiversity literature.
-BHL was founded in 2006 and is goverened by an internetional consortium.
+BHL was founded in 2005 to increase open access to biodiversity literature and is goverened by an internetional consortium [@Gwinn2009; @Rinaldo2009; @Smith2016; @Kalfatovic2019].
 BHL currently comprises of 270 thousand volumes and 60 million pages of biodiversity texts.
 By far the best way to discover biodiversity information in BHL is by searching for scintific names of organisms.
-The index of scientific names for BHL is created by Global Names Architecture (GNA) project.
+The index of scientific names for BHL is created by Global Names Architecture (GNA) project [@Costantino2020; @Richard2020].
 
-The purpose of GNA is creation of services and tools that allow to globally connect biodiversity information and research via scientific names.
-GNA was founded in 2007 and includes nomenclatural (ZooBank, a zoological names registrator) and lexical tools (GNparser, GNverifier, GNfinder).
+The purpose of GNA is creation of services and tools that globally connect biodiversity information and research via scientific names.
+GNA was founded in 2007 and includes nomenclatural (ZooBank, a zoological names registrator) and lexical tools (GNfinder, GNparser, GNverifier).
 GNfinder detects scientific names in texts.
 GNparser normalizes scientific name-strings and extracts semantic meanings of their components.
-Normalised scientific names allow to aggregate lexical variants of a name into a lexical group.
-GNverifier allows to search a name-string of interest in more than 100 sources of biodiversity data.
+Normalizing scientific names also enables aggregating lexical variants of a name into a lexical group.
+GNverifier enables searching for scientific names in more than 100 sources of biodiversity data, which helps verify whether the searched names string is a scientific name.
 GNverifier uses data from Catalogue of Life, Encyclopedia of Life, Index Fungorum, Global Biodiversity Information Facility and many others.
-GNA tools are used for creation of scientific name index in BHL.
+These GNA tools are used for creating the scientific name index in BHL, which is used for BHL search [@Costantino2020; @Richard2020].
 
-The BHL index of scientific names is created by processing BHL data through BHLindex, yet another GNA tool.
+The BHL index of scientific names is created by processing BHL data through another GNA tool, BHLindex.
 BHLindex breaks each volume in BHL into tokens (words).
-Then it scans the tokens and uses heuristic and natural language processing algorithms of GNfinder to detect possible scientific names.
+The heuristic and natural language processing algorithms of GNfinder are used to detect possible scientific names in the tokenized words.
 Later these names are verified (reconciled and resolved) via GNverifier.
-The process is quite fast and allows to process 60 millions of BHL pages in about 12 hours on a modern laptop.
-The efficiency of the index creation allows to incrementally improve algorithms and quality of the name-finding.
-GNverifier also provides metadata for each volume, calculating its biological "context".
+The process of generating the BHL scientific names index has been highly optimized for speed, which enables processing 60 million BHL pages in ~12 hours on a modern laptop.
+The efficiency of the index creation offers the major advantage of being able to improve BHL search as the scanned page OCR improves, and to incrementally improve the scientiifc name finding algorithms of GNA tools.
+GNverifier also enhances the metadata for each volume by attempting to determine the biological "context".
 Such information includes the kingdom which contains most of the names found in a volume, as well as the lowest clade that contains more than half of the volume' names.
-The calculation uses managerial classification of the Catalogue of Life.
+The calculation uses the management classification from Catalogue of Life [@Wellington2009].
 
 Searching BHL for a particular name in the name index would often miss a significant amount of data because taxons' names do change with time.
 CoL currently contains ~4 million names, for ~2 million taxons.
@@ -93,11 +93,14 @@ From this data we can estimate that there are 2-3 names per a taxon on average.
 It means that to get more comprehensive data about species it is important to search not only by one name, but by all names used for the species historically.
 
 Another way to aquire information from BHL is by searching for a particular paper.
-Thanks to BioStore effort metainformation and location is known for 200 000? papers in BHL. However to find a paper by a citation is still hard, especially automatically by a script.
+Thanks to BioStore effort metainformation and location is known for 200 000? papers in BHL [@Page2010]. However to find a paper by a citation is still hard, especially automatically by a script.
 There is a large variety of lexical variants for every journal name (FIG).
 Format of data about the year of publication, a journal volume, pages differs from one citation to the next.
 It is much easier to search for a year, volume and page data as numbers, but in BHL such metadata is stored as a string and is not consistent throghout the corpus.
 Quite often such metadata is missing, or contains mistakes and it makes the search harder.
+
+TODO: incorporate [@Pilsk2010] which covers librarian point of view on metadata
+Pilsk, et al.: "Over the centuries, scientific nomenclature specialists have been forming species citations using abbreviations and notes that accommodate their spe- cial fields of study. These practices developed in an isolated manner specific to discipline (or subdiscipline) and independent of related species projects or the expertise of librarians and information professionals. Concurrently, librarians developing and implementing metadata policies and procedures never entered into conversation with taxonomists. Librarians did little to dis- cover how taxonomic citations are formed and what the actual access needs of the scientists were. As a result, each group adopted its own way of pro- cessing information, and constant translation between the two worlds was necessary. At best, a clumsy, but acceptable, disconnected reliance existed between these two fields"
 
 TODO: Fig: examples of journal name different spellings
 

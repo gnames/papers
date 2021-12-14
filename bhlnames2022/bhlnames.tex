@@ -46,6 +46,29 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \hypersetup{colorlinks=false, allbordercolors={0.6 0.6 1}, pdfborderstyle={/S/U/W 0.5}}
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
@@ -138,51 +161,59 @@ Species File Group, BHL index
 \end{itemize}
 
 The Catalogue of Life (CoL) project was established in 2000 with the
-goal of developing a global checklist of all species {[}Bisby2000{]}. As
-of this writing, CoL contains over 2 million species with 1.6 million
-synonyms. CoL additionally has 1.6 million synonym names, which enables
-finding species using either the currently accepted scientific name or
-historical names. For example, synonyms can result from species being
-moved to a different genus, or duplicate descriptions of the same taxon
-being resolved. Of the 3.7 million scientific names in CoL, only XXX\%
-have nomenclatural references to the species description in the
-literature.
+goal of developing a global species checklist of all currently accepted
+scientific names (Bisby 2000). As of this writing, CoL contains over 2
+million accepted species. CoL additionally tracks historical scientific
+names that are no longer accepted and contains 1.6 million of these
+synonyms, which enables finding species using either the currently
+accepted scientific name or their historical names. Of the 3.7 million
+scientific names in CoL, 53\% have nomenclatural references to the
+original species description in the literature.
 
 Biodiversity Heritage Library (BHL) is the largest open access
-collection of biodiversity literature. BHL was founded in 2006 and is
-goverened by an internetional consortium. BHL currently comprises of 270
-thousand volumes and 60 million pages of biodiversity texts. By far the
-best way to discover biodiversity information in BHL is by searching for
-scintific names of organisms. The index of scientific names for BHL is
-created by Global Names Architecture (GNA) project.
+collection of biodiversity literature. BHL was founded in 2005 to
+increase open access to biodiversity literature and is goverened by an
+internetional consortium (Gwinn and Rinaldo 2009, Rinaldo and Norton
+2009, Smith and Rinaldo 2016, Kalfatovic et al. 2019). BHL currently
+comprises of 270 thousand volumes and 60 million pages of biodiversity
+texts. By far the best way to discover biodiversity information in BHL
+is by searching for scintific names of organisms. The index of
+scientific names for BHL is created by Global Names Architecture (GNA)
+project (Costantino 2020, Richard 2020).
 
-The purpose of GNA is creation of services and tools that allow to
-globally connect biodiversity information and research via scientific
-names. GNA was founded in 2007 and includes nomenclatural (ZooBank, a
-zoological names registrator) and lexical tools (GNparser, GNverifier,
-GNfinder). GNfinder detects scientific names in texts. GNparser
-normalizes scientific name-strings and extracts semantic meanings of
-their components. Normalised scientific names allow to aggregate lexical
-variants of a name into a lexical group. GNverifier allows to search a
-name-string of interest in more than 100 sources of biodiversity data.
-GNverifier uses data from Catalogue of Life, Encyclopedia of Life, Index
-Fungorum, Global Biodiversity Information Facility and many others. GNA
-tools are used for creation of scientific name index in BHL.
+The purpose of GNA is creation of services and tools that globally
+connect biodiversity information and research via scientific names. GNA
+was founded in 2007 and includes nomenclatural (ZooBank, a zoological
+names registrator) and lexical tools (GNfinder, GNparser, GNverifier).
+GNfinder detects scientific names in texts. GNparser normalizes
+scientific name-strings and extracts semantic meanings of their
+components. Normalizing scientific names also enables aggregating
+lexical variants of a name into a lexical group. GNverifier enables
+searching for scientific names in more than 100 sources of biodiversity
+data, which helps verify whether the searched names string is a
+scientific name. GNverifier uses data from Catalogue of Life,
+Encyclopedia of Life, Index Fungorum, Global Biodiversity Information
+Facility and many others. These GNA tools are used for creating the
+scientific name index in BHL, which is used for BHL search (Costantino
+2020, Richard 2020).
 
 The BHL index of scientific names is created by processing BHL data
-through BHLindex, yet another GNA tool. BHLindex breaks each volume in
-BHL into tokens (words). Then it scans the tokens and uses heuristic and
-natural language processing algorithms of GNfinder to detect possible
-scientific names. Later these names are verified (reconciled and
-resolved) via GNverifier. The process is quite fast and allows to
-process 60 millions of BHL pages in about 12 hours on a modern laptop.
-The efficiency of the index creation allows to incrementally improve
-algorithms and quality of the name-finding. GNverifier also provides
-metadata for each volume, calculating its biological ``context''. Such
-information includes the kingdom which contains most of the names found
-in a volume, as well as the lowest clade that contains more than half of
-the volume' names. The calculation uses managerial classification of the
-Catalogue of Life.
+through another GNA tool, BHLindex. BHLindex breaks each volume in BHL
+into tokens (words). The heuristic and natural language processing
+algorithms of GNfinder are used to detect possible scientific names in
+the tokenized words. Later these names are verified (reconciled and
+resolved) via GNverifier. The process of generating the BHL scientific
+names index has been highly optimized for speed, which enables
+processing 60 million BHL pages in \textasciitilde12 hours on a modern
+laptop. The efficiency of the index creation offers the major advantage
+of being able to improve BHL search as the scanned page OCR improves,
+and to incrementally improve the scientiifc name finding algorithms of
+GNA tools. GNverifier also enhances the metadata for each volume by
+attempting to determine the biological ``context''. Such information
+includes the kingdom which contains most of the names found in a volume,
+as well as the lowest clade that contains more than half of the volume'
+names. The calculation uses the management classification from Catalogue
+of Life (\textbf{Wellington2009?}).
 
 Searching BHL for a particular name in the name index would often miss a
 significant amount of data because taxons' names do change with time.
@@ -196,15 +227,30 @@ the species historically.
 
 Another way to aquire information from BHL is by searching for a
 particular paper. Thanks to BioStore effort metainformation and location
-is known for 200 000? papers in BHL. However to find a paper by a
-citation is still hard, especially automatically by a script. There is a
-large variety of lexical variants for every journal name (FIG). Format
-of data about the year of publication, a journal volume, pages differs
-from one citation to the next. It is much easier to search for a year,
-volume and page data as numbers, but in BHL such metadata is stored as a
-string and is not consistent throghout the corpus. Quite often such
-metadata is missing, or contains mistakes and it makes the search
-harder.
+is known for 200 000? papers in BHL (Page 2010). However to find a paper
+by a citation is still hard, especially automatically by a script. There
+is a large variety of lexical variants for every journal name (FIG).
+Format of data about the year of publication, a journal volume, pages
+differs from one citation to the next. It is much easier to search for a
+year, volume and page data as numbers, but in BHL such metadata is
+stored as a string and is not consistent throghout the corpus. Quite
+often such metadata is missing, or contains mistakes and it makes the
+search harder.
+
+TODO: incorporate (Pilsk et al. 2010) which covers librarian point of
+view on metadata Pilsk, et al.: ``Over the centuries, scientific
+nomenclature specialists have been forming species citations using
+abbreviations and notes that accommodate their spe- cial fields of
+study. These practices developed in an isolated manner specific to
+discipline (or subdiscipline) and independent of related species
+projects or the expertise of librarians and information professionals.
+Concurrently, librarians developing and implementing metadata policies
+and procedures never entered into conversation with taxonomists.
+Librarians did little to dis- cover how taxonomic citations are formed
+and what the actual access needs of the scientists were. As a result,
+each group adopted its own way of pro- cessing information, and constant
+translation between the two worlds was necessary. At best, a clumsy, but
+acceptable, disconnected reliance existed between these two fields''
 
 TODO: Fig: examples of journal name different spellings
 
@@ -497,6 +543,58 @@ Thanks to you all. Rich Pyle for journal data
 \section{Supplementary material}\label{supplementary-material}}
 
 \hypertarget{endnotes}{%
-\section{Endnotes}\label{endnotes}}
+\section*{Endnotes}\label{endnotes}}
+\addcontentsline{toc}{section}{Endnotes}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-Bisby2000}{}}%
+Bisby FA (2000) {The quiet revolution: Biodiversity informatics and the
+Internet}. Science 289: 2309--2312.
+\url{https://doi.org/10.1126/science.289.5488.2309}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Costantino2020}{}}%
+Costantino G (2020) {BHL Improves the Speed and Accuracy of its
+Taxonomic Name Finding Services with gnfinder}. Available from:
+\url{https://blog.biodiversitylibrary.org/2020/07/bhl-improvestaxonomic-name-services-gnfinder.html}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Gwinn2009}{}}%
+Gwinn NE, Rinaldo C (2009) {The Biodiversity Heritage Library: Sharing
+biodiversity literature with the world}. IFLA Journal 35: 25--34.
+\url{https://doi.org/10.1177/0340035208102032}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Kalfatovic2019}{}}%
+Kalfatovic MR, Costantino G, Rinaldo CA (2019) {The Biodiversity
+Heritage Library: Unveiling a World of Knowledge About Life on Earth}.
+In:, 352--355. \url{https://doi.org/10.1007/978-3-030-30760-8_32}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Page2010}{}}%
+Page R (2010) {Finding scientific articles in a large digital archive:
+BioStor and the Biodiversity Heritage Library}. Nature Precedings:
+1--19. \url{https://doi.org/10.1038/npre.2010.4928.1}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Pilsk2010}{}}%
+Pilsk SC, Person MA, Deveer JM, Furfey JF, Kalfatovic MR (2010) {The
+Biodiversity Heritage Library: Advancing Metadata Practices in a
+Collaborative Digital Library}. Journal of Library Metadata 10:
+136--155. \url{https://doi.org/10.1080/19386389.2010.506400}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Richard2020}{}}%
+Richard J (2020) {Improving Taxonomic Name Finding in the Biodiversity
+Heritage Library}. Biodiversity Information Science and Standards 4.
+\url{https://doi.org/10.3897/biss.4.58482}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Rinaldo2009}{}}%
+Rinaldo C, Norton C (2009) {BHL, The Biodiversity Heritage Library: An
+Expanding International Collaboration}. Nature Precedings.
+\url{https://doi.org/10.1038/npre.2009.3620.1}
+
+\leavevmode\vadjust pre{\hypertarget{ref-Smith2016}{}}%
+Smith JE, Rinaldo CA (2016) {Collaborating on open science: The journey
+of the Biodiversity Heritage Library}. Dobreva M, Schmidt B (Eds).
+Information Services \& Use 35: 211--216.
+\url{https://doi.org/10.3233/ISU-150785}
+
+\end{CSLReferences}
 
 \end{document}
