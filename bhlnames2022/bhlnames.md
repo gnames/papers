@@ -56,7 +56,7 @@ Species File Group, BHL index
   ~ 7mil names (nomenclatural layer)
   ~ 2.5mil taxons
 
-The Catalogue of Life (CoL) project was established in 2000 with the goal of developing a global species checklist of all currently accepted scientific names [@Bisby2000].
+The Catalogue of Life (CoL) project was established in 2000 with the goal of developing a global species checklist of all currently accepted scientific names [@Bisby2000; @Wilson2007].
 As of this writing, CoL contains over 2 million accepted species.
 CoL additionally tracks historical scientific names that are no longer accepted and contains 1.6 million of these synonyms, which enables finding species using either the currently accepted scientific name or their historical names.
 Of the 3.7 million scientific names in CoL, 53% have nomenclatural references to the original species description in the literature.
@@ -74,54 +74,53 @@ GNparser normalizes scientific name-strings and extracts semantic meanings of th
 Normalizing scientific names also enables aggregating lexical variants of a name into a lexical group.
 GNverifier enables searching for scientific names in more than 100 sources of biodiversity data, which helps verify whether the searched names string is a scientific name.
 GNverifier uses data from Catalogue of Life, Encyclopedia of Life, Index Fungorum, Global Biodiversity Information Facility and many others.
-These GNA tools are used for creating the scientific name index in BHL, which is used for BHL search [@Costantino2020; @Richard2020].
+These GNA tools are used for creating the scientific name index in BHL, which is used for BHL search [@Costantino2019; @Richard2020].
 
 The BHL index of scientific names is created by processing BHL data through another GNA tool, BHLindex.
-BHLindex breaks each volume in BHL into tokens (words).
-The heuristic and natural language processing algorithms of GNfinder are used to detect possible scientific names in the tokenized words.
-Later these names are verified (reconciled and resolved) via GNverifier.
-The process of generating the BHL scientific names index has been highly optimized for speed, which enables processing 60 million BHL pages in ~12 hours on a modern laptop.
-The efficiency of the index creation offers the major advantage of being able to improve BHL search as the scanned page OCR improves, and to incrementally improve the scientiifc name finding algorithms of GNA tools.
-GNverifier also enhances the metadata for each volume by attempting to determine the biological "context".
+BHLindex breaks each volume into tokenized words, which enables the heuristic and natural language processing algorithms of GNfinder to detect potential scientific names within the volume's text.
+Potential scientific names are verified (reconciled and resolved) via GNverifier.
+The process of generating the BHL scientific names index has been highly optimized for performance, which enables processing 60 million BHL pages in ~12 hours on a modern laptop.
+The speed of the BHL index creation offers the major advantage of being able to improve BHL search as the scanned page OCR improves [@Herrmann2020], and to incrementally improve the scientiifc name finding algorithms of GNA tools.
+GNverifier also augments the metadata for each volume by attempting to determine the biological context.
 Such information includes the kingdom which contains most of the names found in a volume, as well as the lowest clade that contains more than half of the volume' names.
-The calculation uses the management classification from Catalogue of Life [@Wellington2009].
+The calculation uses the management classification from Catalogue of Life [@Gordon2009].
 
-Searching BHL for a particular name in the name index would often miss a significant amount of data because taxons' names do change with time.
-CoL currently contains ~4 million names, for ~2 million taxons.
-The database of GNverifier contains 8 million canonical forms, for ~2.5 million known taxons.
-From this data we can estimate that there are 2-3 names per a taxon on average.
-It means that to get more comprehensive data about species it is important to search not only by one name, but by all names used for the species historically.
+Searching for a specific scientific name in the BHL name index would often miss a significant amount of data due to changes in taxon names over time.
+CoL currently contains ~3.6 million scientific names for ~2 million taxa.
+The database of GNverifier contains 8 million scientific names, for ~2.5 million known taxa.
+From this data we can estimate that there are 2-3 names per taxon on average, which fits with other published estimates (3.5 names/taxon in seed plants [@Scotland2003]).
+To obtain more comprehensive knowledge about a biological species it is important to search not by just one scientific name, but by all synonyms used for the species historically.
 
 Another way to aquire information from BHL is by searching for a particular paper.
-Thanks to BioStore effort metainformation and location is known for 200 000? papers in BHL [@Page2010]. However to find a paper by a citation is still hard, especially automatically by a script.
-There is a large variety of lexical variants for every journal name (FIG).
-Format of data about the year of publication, a journal volume, pages differs from one citation to the next.
-It is much easier to search for a year, volume and page data as numbers, but in BHL such metadata is stored as a string and is not consistent throghout the corpus.
-Quite often such metadata is missing, or contains mistakes and it makes the search harder.
+Thanks to the BioStor project, metadata and page locations are known for 312,126 papers in BHL [@Page2010].
+However, designing software to automatically find any paper in BHL by a citation is still challenging.
+There are a large variety of lexical variants for every journal name (FIG).
+No standard for citation formatting was ever agreed upon by publishers, so the arrangement of authors, year of publication, volume, issue, and page widely varies.
+It is much easier to search for a year, volume and page data as numbers, but in BHL such metadata is stored as a string and is not consistent throughout the corpus with some journals using Roman numerals.
+Quite often metadata is missing entirely or contains errors, which complicates linking citation strings to the correct page in BHL.
 
 TODO: incorporate [@Pilsk2010] which covers librarian point of view on metadata
 Pilsk, et al.: "Over the centuries, scientific nomenclature specialists have been forming species citations using abbreviations and notes that accommodate their spe- cial fields of study. These practices developed in an isolated manner specific to discipline (or subdiscipline) and independent of related species projects or the expertise of librarians and information professionals. Concurrently, librarians developing and implementing metadata policies and procedures never entered into conversation with taxonomists. Librarians did little to dis- cover how taxonomic citations are formed and what the actual access needs of the scientists were. As a result, each group adopted its own way of pro- cessing information, and constant translation between the two worlds was necessary. At best, a clumsy, but acceptable, disconnected reliance existed between these two fields"
 
 TODO: Fig: examples of journal name different spellings
 
-If a researcher has a citation of a nomenclatural event and tries to find the paper with original description of species, it is often not a trivial task.
+Even if a researcher has the citation for a nomenclatural event, it is often not a trivial task to navigate to the exact page in BHL in order to access the original species description for research.
 Citations are hard to match to pages in BHL as described above.
 Sometimes OCR errors change a name spelling and as a result exist in a volume under different spelling variants.
-Quite often people add an annotation next to new species or combination, such as sp.nov, comb nov.
 
-However such annotations are not consistent (FIG), and also often modified by OCR.
+Quite often people add an annotation next to new species or combination, such as sp.nov, comb nov. However such annotations are not consistent (FIG), and also often modified by OCR.
 When several species of the same genus are described, the genus in the name is often abbreviated, which also masks the name from a researcher.
 
 TODO: Fig: examples for annotations
 
-The project we describe in this paper helps to adress these problems with the following solutions.
-BHLnames uses name index, CoL data, and BHL metadata together to improve search of an information connected to a name-string, match a citation to a page in BHL, find pages that contain original descriptions of species..
+The project we describe in this paper helps to adress these problems with the following solutions:
+1) BHLnames uses a combination of the names index, CoL data, and BHL metadata to improve nomenclatural and taxonomic search, link a citation to a page in BHL, or link to pages containing the original species description.
 BHLnames uses CoL synonymy data to optionally expand name search to all its synonyms.
-BHLnames normalizes BHL data for publication years and pages, making it easier to compare it with numeric representations of years and pages.
-The project uses 2? million citations of nomenclatural events for names in CoL to provide data about nomenclatural events.
-BHLnames normalizes journal names in a citation and BHL to match them together.
-We use Naive Bayes approach to calculate probabilities of a citation to a BHL page match and return the best results.
-Such results are provided via Dryad (Link)
+2) BHLnames normalizes BHL data for publication years and pages, making it easier to compare numeric representations.
+3) The project uses 2,085,819 million citations of nomenclatural events for names in CoL to provide data about nomenclatural events.
+4) BHLnames normalizes journal names in order to match citation strings to the journal name in BHL.
+5) We use Naive Bayes approach to calculate probabilities of a citation to BHL page match and return the best results.
+The data linking CoL nomenclatural citations to the original species description pages in BHL is downloadable from the Dryad data repository (Link).
 
 # Project description
 
@@ -134,71 +133,58 @@ Design description: This is the whole paper actually (?)
 
 ## Goals
 
-The goals of BHLnames project are:
+The goals of BHLnames project are to:
 
-1. Provide an ability to search for a citation in BHL using citation metadata
-and the index of names data.
+1. Dramatically simplify citation string search using the names index.
 
-    Use names' index information to dramatically simplify search for a publication.
-    Combine citation metadata together with occurences of a name to point to possible pages of a citation with high probability.
+    Use citation metadata in combination with occurences of a scientific name to link to pages that potentially match the citation with a provided probability score.
 
-2. Discover original descriptions and nomenclatural events in BHL.
+2. Link to original species descriptions and nomenclatural events in BHL.
 
-    Use the goal #1 together with citation and name information from CoL.
-    Combine these data to determine pages containing nomenclatural events for scientific names.
-    Increase usability of BHL for biodiversity reseearchers by augmenting scientific names index with the nomenclatural events index.
+    Use citation search in combination with CoL nomenclatural citations to build an nomenclatural event index that will increase usability of BHL for biodiversity researchers.
 
 3. Add "taxonomic intalligence" to the BHL's index of scientific names.
 
-    Use goal #2 and the CoL data to optionally expand BHL name search with taxonomical information.
-    Return data not only for a particular name, but for its synonyms.
-    Provide data about currently accepted name for the taxa.
-    Also, when available, provide data about nomenclatural events for all relevant names.
+    Supplement the nomenclatural event index with CoL synonym data to optionally extend BHL name search to include all relevent taxonomical information by returning search results for the accepted name and all of its synonyms.
 
 (Methods)
 
 ## Technical introduction
 
 BHLnames an Open Source project written in Go and JavaScript.
-It can be used independently by anybody with Internet connection and a write access to a PostgreSQL database.
-It consists of one stand-alone file and requires no additional dynamic libraries.
-The file can be downloaded at (GitHub link)
-
-BHLnames requires a substantial initialization stage.
-After initialization it can be used in off-line mode.
+It can be freely used by anyone with Internet connection, write access to a PostgreSQL database, and XXX GB of disk space.
+It consists of one stand-alone binary file and requires no additional dynamic libraries.
+The file can be downloaded at: https://github.com/gnames/bhlnames/releases
+Useage requires an initialization stage that can take several hours to complete, but afterwards the BHLnames binary can be used without an internet connection.
 
 ## Architecture
 
-BHLnames' code structure mostly uses Clean Architecture principles for
-organisation of its modules.
-The main use-case functinality is defined in an in an interface (Link?).
-
-The core (entity) modules that do not require I/O interactions with a database, internet or local storate, are located in 'ent' directory.
+BHLnames' code structure mostly adheres to Clean Architecture principles [@Martin2018].
+The main use-case functionality is defined in an interface (Link?).
+The core (entity) modules that do not require input/output (I/O) interactions with a database, the internet or local storage, are located in the 'ent' directory.
 The 'ent' directory also contains interfaces implemented by modules that need I/O access.
-Such approach uncouples core modules from particular implementations of external I/O processes and provides flexibility for changing ways of storing and accessing the data.
+The Clean Architecture approach is advantageous because it uncouples core modules from particular implementations of external I/O processes and provides flexibility for changing ways of storing and accessing the data.
+Modules requiring database, internet, user interfaces, or framework accesss implement entity interfaces and depend on the main use-case interface for providing functionality of BHLnames.
+One exception to this rule is the 'bhlnames' directory that contains the commandline interface, following convention established by its Cobra module dependency.
 
-The modules that require access to database, internet, interfaces to users, accesses to frameworks implement entity interfaces and depend on the main use-case interface for providing functionality of BHLnames.
-One exception to this rule is 'bhlnames' directory that contains command-line interface to the project.
+BHLnames provides 3 user interfaces:
 
-There are 3 different kinds of user-interfaces:
+1. The commandline application starts and stops the web service or provides BHLnames functionality via the terminal.
 
-1. Command-line application starts and stops the web-service or provides BHLnames functionality via terminal window.
+2. The RESTful API provides endpoints for remote access to BHLnames functionality via HTTP calls.
 
-2. RESTful API provides endpoints for remote access to BHLnames functionality via HTTP calls.
-
-3. Web-interface allows remote interactive access BHLnames users via Internet.
+3. The web interface is a Javascript widget that can be embedded on any website to connect scientific names with BHL literature in an interactive pop-up modal.
 
 ### Dependencies
 
-Initialization phase of the projct requires a remote access to remote data-dump of BHL located at (LINK).
-Also it needs an access to a RESTful inteface of BHLindex application.
+Initialization phase of the project requires internet access to a data export from BHL (https://www.biodiversitylibrary.org/data/data.zip) and the BHLindex RESTful API.
 
-BHLindex is an Open Source application written in Go that creates scientific names index of BHL.
-The application scans BHL's 60 million pages, detects scientific names and provides data about their occurences via RESTful interface. It is possible to use publicly available URL that serves BHLindex API at (LINK).
+BHLindex is an Open Source application written in Go that creates a scientific names index of BHL.
+The application scans BHL's 60 million pages, detects scientific names and provides data about their page location via RESTful interface. It is possible to use publicly available URL that serves BHLindex API at (LINK).
 
 There are many dependencies on Go modules, some of them written specifically for Global Names project.
 We will talk about some of GN modules further.
-Go dependencies are required only during the compilation of the project and are not needed for running BHLnames service or command-line application.
+Go dependencies are required only during the compilation of the project and are not needed for running BHLnames service or commandline application.
 
 ## Workflow
 
