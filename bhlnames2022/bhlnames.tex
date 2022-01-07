@@ -309,11 +309,12 @@ The goals of BHLnames project are to:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Dramatically simplify citation string search using the names index.
+  Add ``taxonomic intalligence'' to the BHL's index of scientific names.
 
-  Use citation metadata in combination with occurences of a scientific
-  name to link to pages that potentially match the citation with a
-  provided probability score.
+  Supplement the nomenclatural event index with CoL synonym data to
+  optionally extend BHL name search to include all relevent taxonomical
+  information by returning search results for the accepted name and all
+  of its synonyms.
 \item
   Link to original species descriptions and nomenclatural events in BHL.
 
@@ -321,12 +322,11 @@ The goals of BHLnames project are to:
   build an nomenclatural event index that will increase usability of BHL
   for biodiversity researchers.
 \item
-  Add ``taxonomic intalligence'' to the BHL's index of scientific names.
+  Dramatically simplify citation string search using the names index.
 
-  Supplement the nomenclatural event index with CoL synonym data to
-  optionally extend BHL name search to include all relevent taxonomical
-  information by returning search results for the accepted name and all
-  of its synonyms.
+  Use citation metadata in combination with occurences of a scientific
+  name to link to pages that potentially match the citation with a
+  provided probability score.
 \end{enumerate}
 
 (Methods)
@@ -382,9 +382,12 @@ BHLnames provides 3 user interfaces:
 \hypertarget{dependencies}{%
 \subsubsection{Dependencies}\label{dependencies}}
 
+The project requires installed PostgreSQL database.
+
 Initialization phase of the project requires internet access to a data
 export from BHL (https://www.biodiversitylibrary.org/data/data.zip) and
-the BHLindex RESTful API.
+the BHLindex RESTful API. Internet connection must be reasonably fast
+due to the large amount of downloaded data.
 
 BHLindex is an Open Source application written in Go that creates a
 scientific names index of BHL. The application scans BHL's 60 million
@@ -401,26 +404,188 @@ service or commandline application.
 \hypertarget{workflow}{%
 \subsection{Workflow}\label{workflow}}
 
-\hypertarget{data-import}{%
-\subsubsection{Data Import}\label{data-import}}
+BHLnames has 2 distinct steps. Initialization and service.
+Initialization step requires remote access to BHL data dumps and to a
+RESTful API of BHLindex service. Service step provides a user with a
+web-interface, RESTful API and comman-line application to get taxonomic
+details about names, match nomenclatural reference to a page in BHL,
+match a reference string to BHL pages.
+
+\hypertarget{initialization-and-data-import}{%
+\subsubsection{Initialization and data
+import}\label{initialization-and-data-import}}
+
+From BHL's dumpd files BHLnames receives metadata about Titles, Items,
+Pages and Parts. BHL term Titles includes entities that might contain
+one or more volumes, for example a book or a journal. Items correspond
+to physical volumes; an Item can be a book, a volume of a journal etc.
+Pages correspond to scanned and processed pages of an Item. Parts are
+distinct entities inside of an Item. For example a scientific paper is a
+Part. Metainformation from BHL allows to bind scientific names to BHL
+infrastructure.
+
+BHLindex API provides data and metadata about scientific names detected
+in BHL corpus. Each name's occurence is associated with Internet Archive
+identifiers for a volume and a page. Also it contains location on a
+page, and results of verificaton process. Verification process resolves
+the name, if possible to a taxonomic database, like Catalogue of Life,
+or provides information if a name reconciles to a name in some other
+resource registered for GNverifier service.
+
+Reconciliation is a process of matching a name to its lexical variants.
+Resolution allows to receive taxonomic information for a particular
+name: if a names is a synonym, what is currently accepted name for the
+taxon, what kind of classification is associated with the taxon.
+
+Initialization step downloads all the relevant data, processes it, and
+saves the resalt into a relational PostgreSQL database.
+
+We use ``title.txt'', ``item.txt'', ``page.txt'', ``part.txt'' from the
+BHL dump. The `title.txt' file contains metainformation ``titles'', for
+example journals or books. The `item.txt' contains information about
+``items'', for example a particular volume of a journal or a book. The
+`page.txt' has metadata about pages in a ``item''. The `part.txt'
+provides metadata about ``parts'' of an ``item'', for example about a
+scientific paper title, authors, start and end page etc.
+
+\hypertarget{year-processing}{%
+\paragraph{Year processing}\label{year-processing}}
+
+There are several fields with year information in BHL metadata.
+
+The ``titles'' have `StartYear' and `EndYear' fields corresponding to
+beginning of a pubhlishing and the end of the publishing. The ``items''
+have `Year' field corresponding to the date of publication. However, in
+practice' some ``items'' might span several years, if they contain
+volumes of a journal rebound together. The ``parts'' have a ``Date''
+field, usually in a `yyyy-mm-dd' format where ``-mm'' and ``-dd'' parts
+are optional.
+
+The year of publication data can be extracted from all of these fields,
+however some, or all of these fields might be empty. Is some rare
+occastions the ``year fields'' are contradictory. To determine a year of
+publicaton for a particular name we check for existence of a year
+information going order ``part'', ``item'', ``title''. For example if we
+found that the page is inside of a ``part'', we use the ``part's'' date
+to determine a year. If ``title'' information is used, the ``EndYear''
+value becomes a year for a page, indicating that the page could not be
+published later than this year. For some pages no year data exists.
+
+\hypertarget{page-and-volume-number-processing}{%
+\paragraph{Page and volume number
+processing}\label{page-and-volume-number-processing}}
+
+Page number is an important field for connecting name occurance with the
+publication metadata, however the ``PageNumber'' field in ``page.txt''
+cannot always be easily converted to an integer. The value of the field
+is not always numeric, to name a few:
+
+\begin{verbatim}
+(1966, v.15, No.15)
+, fig. A-B
+, p. 431-436
+, xiii-xiv
+18 (Tab. XXXVII, XXX
+208, Fig. 3
+\end{verbatim}
+
+The page number is converted to an integer where possible.
+
+The Volume information more often than not is not numeric; for example:
+
+\begin{verbatim}
+10, n. 20
+Armitage, W.H.
+v.2, pt. 1
+(2020: Mar.)
+0007
+v.58:pt.1 (1889)
+v.8:no.21 (2004:Apr)
+\end{verbatim}
+
+We store volume data as is, without conversion to an integer.
+
+\hypertarget{scientific-names-processing}{%
+\paragraph{Scientific names
+processing}\label{scientific-names-processing}}
+
+More often than not a scientific name appears more than once in a
+volume. To decrease the amount of noise we check if a page where name is
+found is included into a ``part'', for example a scientific paper. If
+yes, only the first occurance of a name in the ``part'' is included. If
+a name is also detected in an ``item'', for example a journal volume,
+but is not part of any known ``part'', the first instance of a name in
+an ``item'' is included. If there no ``parts'' are assigned to an
+``item'', only the first appearance of a name in an ``item'' is
+included.
+
+Every name string that is reconciled to a name in the Catalogue of Life
+(61.8\% of all verified names) is associated with taxonomic resolution
+of a name-string to a clade in the Catalogue of Life. For example,
+``Felis concolor'' name-string is associated with a species clade where
+currently accepted name is ``Puma concolor'' according to the Catalogue
+of Life.
+
+\hypertarget{calculation-of-a-taxonomic-statistic}{%
+\paragraph{Calculation of a taxonomic
+statistic}\label{calculation-of-a-taxonomic-statistic}}
+
+Having most of the name-strings reconciled to the Catalogue of Life
+allows to calculate major kingdom and major clade appeared in BHL
+``items''. All such names contain their placement in the managerial
+Catalogue of Life classification. This placement allows us to find out
+distribution of such names between kingdoms of the classification.
+
+We are also able to find which clade in the classification contains more
+than 50\% of all names resolved to the Catalogue of Life. To calculate
+it, we find how the names are distributed over each of ``kingdom'',
+``phylum/domain'', ``class'', ``order'', ``family''. Knowing the total
+number of names for each clade, we calculate the percentage for each
+clade, and pick one that contains more than 50\% of all such names. For
+example a book about Wolf Spiders would have more than 50\% of all CoL
+names in the order of ``Lycosidae''.
+
+Taxonomic statistics allows to find out a biological ``theme'' for the
+most of BHL volumes.
+
+\hypertarget{data-querying}{%
+\subsubsection{Data querying}\label{data-querying}}
+
+The BHLnames program helps to find answers to these three questions:
+
+\begin{itemize}
+\tightlist
+\item
+  Where BHL contains information about a taxon, given a name string that
+  can be resolved to the taxon.
+\item
+  Where is a page which corresponds to a given nomenclatural citation +
+  a name-string.
+\item
+  Where is a BHL page which corresponds to a given reference + a
+  name-string.
+\end{itemize}
+
+\hypertarget{taxonomic-intelligence}{%
+\paragraph{Taxonomic intelligence}\label{taxonomic-intelligence}}
 
 \hypertarget{interfaces}{%
 \subsection{Interfaces}\label{interfaces}}
+
+\hypertarget{input-formats}{%
+\subsubsection{Input formats}\label{input-formats}}
 
 \hypertarget{gui}{%
 \subsubsection{GUI}\label{gui}}
 
 \hypertarget{embeddable-widget}{%
-\subsubsection{Embeddable widget}\label{embeddable-widget}}
+\paragraph{Embeddable widget}\label{embeddable-widget}}
 
 \hypertarget{api}{%
-\subsubsection{API}\label{api}}
+\paragraph{API}\label{api}}
 
 \hypertarget{command-line}{%
-\subsubsection{Command line}\label{command-line}}
-
-\hypertarget{input-formats}{%
-\subsubsection{Input formats}\label{input-formats}}
+\paragraph{Command line}\label{command-line}}
 
 \hypertarget{audience}{%
 \subsection{Audience}\label{audience}}

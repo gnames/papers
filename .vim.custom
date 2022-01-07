@@ -4,6 +4,7 @@ function! NotesLayout()
     " Rough num columns to decide between laptop and big monitor screens
     set nosplitright
     set nosplitbelow
+    set wrap
     let numcol = 2
     if winwidth(0) >= 220
         let numcol = 3
