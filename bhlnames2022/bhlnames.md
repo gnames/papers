@@ -190,12 +190,12 @@ Service step provides a user with a web-interface, RESTful API and comman-line a
 
 ### Initialization and data import
 
-From BHL's dumpd files BHLnames receives metadata about Titles, Items, Pages and Parts.
+From BHL's dumped files BHLnames receives metadata about Titles, Items, Pages and Parts.
 BHL term Titles includes entities that might contain one or more volumes, for example a book or a journal.
 Items correspond to physical volumes; an Item can be a book, a volume of a journal etc.
 Pages correspond to scanned and processed pages of an Item.
 Parts are distinct entities inside of an Item. For example a scientific paper is a Part.
-Metainformation from BHL allows to bind scientific names to BHL infrastructure.
+Metainformation from BHL allows to integrate scientific names detected in BHL corpus to the rest of the data.
 
 BHLindex API provides data and metadata about scientific names detected in BHL corpus.
 Each name's occurence is associated with Internet Archive identifiers for a volume and a page.
@@ -294,8 +294,45 @@ The BHLnames program helps to find answers to these three questions:
 * Where is a page which corresponds to a given nomenclatural citation + a name-string.
 * Where is a BHL page which corresponds to a given reference + a name-string.
 
-#### Taxonomic intelligence
+#### Taxonomic intelligence workflow
 
+A "taxonomic intelligence" workflow includes an input and output.
+The input consists of one or more scientific name-strings.
+The output provides information which taxon the name resolves to, what is the currently accepted name for the taxon according to the Catalogue of Life, provides a link to images of the taxon according to Encyclopedia of Life, describes sinonym names for the taxon.
+Also it tells how many references include information about the taxon.
+Then it provides list of references which include the taxon together with page links.
+
+Every Reference also provides additional statistics about its Item. It tells how many unique name-strings were detected in the Item, What is the kindom that contains the majority of detected names, what is the smallest taxon that contains more than half of all detected names.
+
+Reference here can be a Part, or Item. If Item contains the name inside of  Parts and outside of any Part, data is provided for the first detection of the taxon in each of these entities.
+
+The main difference between this approach and search of BHL by name is that the search aggregates information about all mentions of a taxon in BHL, no matter what name associated with a taxon was detected. This approach allows to get data linked from all literature in BHL, no matter when it was published and independently on development of Taxonomic science.
+
+Optionally, it is possible to limit the list of returned references to a particular name and avoid the expansion of search to all synonyms.
+
+(TODO an example of output)
+
+#### Nomenclatural references workflow.
+
+Publications that contain nomenclatural events are especially valuable for taxonomists.
+Such publications might contain description of new species, changes in names of species as a result of placing them in a different genus, changed rank, "promotion" of infraspecies to species etc.
+
+BHLnames makes it possible to discover such publicatons in BHL by providing an input that consists of a name-string created in the publivcation and the citation of the publication. It is helpful if such details about publicaton like the year of publication, volume and page numbers are given separately in their own fields.
+
+(TODO Example of input in JSON)
+
+The first step after receiving output is finding all the References that contain a name from the input. Such search is performed without synonymy, so it only contains References that contain the name-string.
+
+In the next step the titles of the References are compared with provided citaton.
+Such title can be a title of a Journal, a book and so on.
+Journal titles are notoriously hard to match because there are so many variations in their presentation.
+For example "Journal
+
+Then the the altorithm tries to match the year of the input citation with the years of publiation known for all the references.
+Note that sometimes the year of BHL Reference is known only approximately, for example if there is only Titile's start and end of publication data are given. Sometimes there is no year information at all.
+The algorithm take in account years that are close to the provided year in the input.
+
+In the next steps
 
 
 ## Interfaces
