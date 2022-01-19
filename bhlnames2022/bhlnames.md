@@ -11,6 +11,69 @@ header-includes:
     pdfborderstyle={/S/U/W 0.5}}
 ---
 
+
+<!-- vim-markdown-toc GFM -->
+
+* [Abstract](#abstract)
+  * [Background](#background)
+  * [New information](#new-information)
+* [Keywords](#keywords)
+* [Classifications](#classifications)
+  * [Taxon Classification](#taxon-classification)
+  * [Subject classification](#subject-classification)
+* [Funder](#funder)
+* [Introduction](#introduction)
+* [Project description](#project-description)
+  * [Goals](#goals)
+  * [Technical introduction](#technical-introduction)
+  * [Architecture](#architecture)
+    * [Dependencies](#dependencies)
+  * [Workflow](#workflow)
+    * [Preprocessed data for Naive Bayes classifier](#preprocessed-data-for-naive-bayes-classifier)
+    * [Initialization and data import](#initialization-and-data-import)
+    * [Configuration file creation](#configuration-file-creation)
+    * [Database and cache initialization](#database-and-cache-initialization)
+      * [Year processing](#year-processing)
+      * [Page and volume number processing](#page-and-volume-number-processing)
+      * [Scientific names processing](#scientific-names-processing)
+      * [Calculation of a taxonomic statistic](#calculation-of-a-taxonomic-statistic)
+      * [Normalization of the books' and journals' titles](#normalization-of-the-books-and-journals-titles)
+      * [Nomenclatural annotations](#nomenclatural-annotations)
+    * [Main functionality](#main-functionality)
+      * [Taxonomic intelligence workflow](#taxonomic-intelligence-workflow)
+      * [Nomenclatural references workflow.](#nomenclatural-references-workflow)
+        * [Collecting "evidences" of a citation match](#collecting-evidences-of-a-citation-match)
+        * [Making a decision](#making-a-decision)
+      * [Arbitrary references workflow](#arbitrary-references-workflow)
+    * [Finding](#finding)
+  * [Interfaces](#interfaces)
+    * [Input formats](#input-formats)
+    * [GUI](#gui)
+      * [Embeddable widget](#embeddable-widget)
+      * [API](#api)
+      * [Command line](#command-line)
+  * [Audience](#audience)
+    * [Examples of usages](#examples-of-usages)
+    * [Summary of scores](#summary-of-scores)
+    * [Benchmarks](#benchmarks)
+    * [Open data deliverables](#open-data-deliverables)
+  * [Conclusions](#conclusions)
+* [Web location (URIs)](#web-location-uris)
+* [Technical specification](#technical-specification)
+* [Repository](#repository)
+* [Usage license](#usage-license)
+* [Implementation](#implementation)
+* [Additional information](#additional-information)
+* [Acknowledgements](#acknowledgements)
+* [Author contributions](#author-contributions)
+* [References](#references)
+* [Figures](#figures)
+* [Tables](#tables)
+* [Supplementary material](#supplementary-material)
+* [Endnotes](#endnotes)
+
+<!-- vim-markdown-toc -->
+
 # Abstract
 
 ## Background
@@ -188,6 +251,14 @@ BHLnames has 2 distinct steps. Initialization and service.
 Initialization step requires remote access to BHL data dumps and to a RESTful API of BHLindex service.
 Service step provides a user with a web-interface, RESTful API and comman-line application to get taxonomic details about names, match nomenclatural reference to a page in BHL, match a reference string to BHL pages.
 
+### Preprocessed data for Naive Bayes classifier
+
+In the program we use Naive Bayes algorithm for determining the most like candidates for citation matching.
+This algorithm is based on collection of evidences that make References in BHL more or less likely candidates to a match with a citation.
+For this algorithm to function we need to decide beforehand which evidences will be collected for each case and how much weight each of them has to influence the final decision.
+
+To calculate such weights for all used types of evidence we manually went through 3500 citation detection cases, and partitioned them into correctly and incorrectly identified (REF). This data is saved into a JSON file and is stored statically inside of the BHLnames binary executable. The data allowed us to calculate weights for each of the evidence type.
+
 ### Initialization and data import
 
 From BHL's dumped files BHLnames receives metadata about Titles, Items, Pages and Parts.
@@ -205,13 +276,41 @@ Verification process resolves the name, if possible to a taxonomic database, lik
 Reconciliation is a process of matching a name to its lexical variants.
 Resolution allows to receive taxonomic information for a particular name: if a names is a synonym, what is currently accepted name for the taxon, what kind of classification is associated with the taxon.
 
-Initialization step downloads all the relevant data, processes it, and saves the resalt into a relational PostgreSQL database.
+### Configuration file creation
 
-We use "title.txt", "item.txt", "page.txt", "part.txt" from the BHL dump.
-The 'title.txt' file contains metainformation "titles", for example journals or books.
-The 'item.txt' contains information about "items", for example a particular volume of a journal or a book.
-The 'page.txt' has metadata about pages in a "item".
-The 'part.txt' provides metadata about "parts" of an "item", for example about a scientific paper title, authors, start and end page etc.
+BHLnames requires an access to PostgreSQL database.
+Also it needs to know where to find BHL datafiles and how to access BHLindex' RESTful API.
+All this data has to be included into configuration file.
+The file is created as $HOME/.config/bhlnames.yaml when BHLnames commandliine application is executed first time.
+A user has to edit the file and enter database credentials. All other settings can be left at its default values.
+
+After that the application is ready for initialization.
+
+### Database and cache initialization
+
+To begin the process of initialization BHLnames has to create all the tables for its PostgreSQL database and create its cache directory for downloaded and processed data.
+
+The database (default name is "bhlnames") should already exist (be created by hand).
+It does not matter if it does have some data already or if it is totallly empty.
+BHLnames initialization process will remove all old data and create required tables from scratch.
+Now the database is ready to import the new data.
+
+The cache directory structure is located at the OS standard location.
+On most Linux distributions it would be created at "$HOME/.cache/bhlnames".
+In case if the directory exists already, old data will be removed, so it will not be able to interfere with the updated data.
+
+Then the initialization step downloads all the relevant data from BHL download site and from RESTful BHLindex API interface, processes it, and saves the result into a relational PostgreSQL database.
+
+From the BHL's downloaded data we use "title.txt", "item.txt", "page.txt",  and "part.txt" files.
+The 'title.txt' file contains metainformation for Titles, for example journals or books.
+The 'item.txt' contains information about Items, for example a particular volume of a journal or a book.
+The 'page.txt' has metadata about pages in an Item.
+The 'part.txt' provides metadata about Parts of an Item, for example about a scientific paper title, authors, start and end page etc.
+
+During the import several data-fields require additional attention.
+Such fields include data about years of publication, volume, page information.Much of the data about detected name-strings will also be processed.
+The largest processing job is required for the Titles' titles, for example a title of a book, a name of a journal etc.
+We use such titles extensively for the matching process, and they will be prepared for fast matchins as it is described further.
 
 #### Year processing
 
@@ -286,7 +385,122 @@ For example a book about Wolf Spiders would have more than 50% of all CoL names 
 
 Taxonomic statistics allows to find out a biological "theme" for the most of BHL volumes.
 
-### Data querying
+#### Normalization of the books' and journals' titles
+
+BHL's "title.txt" contains a "FullTitle" field.
+This field contains the full title of a journal or a book.
+Citations of scientific publications almost always contain a title of a journal, so this field is very useful for matching a citation and a BHL Title.
+However titles in citations are usually abbreviated, and the same title can have a large lexical variants where words are shortened or omitted in a hardly predictable way.
+Fuzzy matching in this circumstances would be very time-consuming and would produce unreliable results.
+Moreover, citation's title is in the middle of other information and to extract it as a separate entity is also very hard task.
+
+For example, citation "Kirschstein, W. In: Verh. bot. Ver. Prov. Brandenb. 48:50. (1907)." contains abbreviated title to "Verhandlungen des Botanischen Vereins für die Provinz Brandenburg.".
+Taking in account that citations often come from different sources and title abbreviations are not standardised, matching the citation to the title rarely succeeds.
+In this manuscript we tried a new apprach that seems to be working quite well
+for matching a citation to a journal title.
+
+We made two observations.
+First, that no matter how much a title is shortened, the first letter of the words have a tendency to survive.
+Second, some words tend to be discarded from a shortened version alltogether.
+Like in the example below "des", "für" and "die" words are totally discared from the shortened version of a title "Verh. bot. Ver. Prov. Brandenb".
+
+We went through three thousand pairs of journal titles and their abbreviated counterparts.
+We extracted words that are often get removed from shortened titles (TODO link to https://github.com/gnames/bhlnames/blob/master/io/dictio/data/excluded.txt).
+Furthe we call these words "excluded".
+
+Then we created 2 "fingerprints" for each title in BHL.
+First "fingerprint" contains the first letter of every word in a title.
+For the second "fingerprint" we remove all "exlcuded" words from the title and
+then take first letter of every word that left.
+For example  "Verhandlungen des Botanischen Vereins für die Provinz Brandenburg." would be normalized to "vdbvfdpb" and "vbvpb" fingerprints.
+The reason we created two fingerprints is an obervation that more often than not, the "excluded" words either stay in a citation intact, or are removed from a citation completely.
+
+For our example we end up with the following fingerprints:
+
+```
+The Journal Title:
+Verhandlungen des Botanischen Vereins für die Provinz Brandenburg.
+vdbvfdpb, vbvpb
+
+The Citation:
+Kirschstein, W. In: Verh. bot. Ver. Prov. Brandenb. 48:50. (1907).
+kwivbvpb
+kwvbvpb
+```
+
+The second "fingerprint" from the journal title "vbvpb" is included into the second "fingerprint" of the citation "kw**vbvpb**".
+Therefore we can assume that the citation contains the title of the journal.
+
+Additional rules for fingerprint creatsion are:
+
+* Journal titles with less than 3 words do not get "fingerprints" created.
+* Word "and" and "&" both become "&".
+* The "fingerprints" longer than 10 characters are truncated to the first 10 characters.
+
+During the data import we create approximately 400,000 "fingerprints" from BHL Titles titles.
+Understandably it would be very time consuming to find which fingerprints out
+of these 400,000 are included into each citation.
+Because of that we implemented an Aho-Corasick algorithm (REF, REF) that allows very fast pattern inclusion detection via a modification of a suffix tree approach.
+
+All of the data generated for the Aho-Corasick algorithm during initializationis backed up to the BHLnames' cache directory.
+When BHLnames starts again this data is read and loaded into the memory according to the Aho-Corasick algorithm.
+In then can be used for a very fast queies that match citations to the titles recorded in BHL database.
+
+#### Nomenclatural annotations
+
+When BHLindex detects scientific names in BHL corpus, it also detects the presence of "nomenclatural annotations" in a vicinity of each name occurence.
+
+Nomenclatural annotions differ slightly depending on a year of publication, exiting nomenclatural rules, and a personality of authors.
+In addition optical character recognition omits or modifies some characters.
+As a result we found a large variety of nomenclatural annotations in BHL texts.
+Here are a few examples:
+
+```
+sp.nov
+sp. nov."。
+n, sp:
+subsp nov.
+ssp. nov.?
+'sp. n.),
+nov. comb)
+n. sp;;
+(nov. comb)
+n. sp..»
+sp. nov.'.
+sp« n.
+sp., 2n.),
+|n. sp.].
+nov. sp.(3),
+n. sp.,375
+n> sp>
+nv. sp.
+(n, sp,):
+nv. sp.,
+(sp?) n
+(n. sp,?)
+sp. nov,).
+sp. (n=5).
+sp. nov.228
+subsp.' nov.,
+,n. comb.;
+sp. nov.557
+n. sp.38
+(n. comb,
+nov. sp.121
+^,sp. n.,
+nov. subsp).
+nov. sp.^)
+```
+
+We normalized all the variants into the following categories:
+
+```
+SP_NOV    - new species
+SUBSP_NOV - new subspecies
+COMB_NOV  - new combination
+NO_ANNOT  - no nomenclatural annotation
+```
+### Main functionality
 
 The BHLnames program helps to find answers to these three questions:
 
@@ -317,23 +531,61 @@ Optionally, it is possible to limit the list of returned references to a particu
 Publications that contain nomenclatural events are especially valuable for taxonomists.
 Such publications might contain description of new species, changes in names of species as a result of placing them in a different genus, changed rank, "promotion" of infraspecies to species etc.
 
-BHLnames makes it possible to discover such publicatons in BHL by providing an input that consists of a name-string created in the publivcation and the citation of the publication. It is helpful if such details about publicaton like the year of publication, volume and page numbers are given separately in their own fields.
+BHLnames makes it possible to discover such publicatons in BHL by providing an input that consists of a name-string created in the publivcation and the citation of the publication.
+It is helpful if such details about publicaton like the year of publication, volume and page numbers are given separately in their own fields.
 
 (TODO Example of input in JSON)
 
-The first step after receiving output is finding all the References that contain a name from the input. Such search is performed without synonymy, so it only contains References that contain the name-string.
+##### Collecting "evidences" of a citation match
 
-In the next step the titles of the References are compared with provided citaton.
-Such title can be a title of a Journal, a book and so on.
-Journal titles are notoriously hard to match because there are so many variations in their presentation.
-For example "Journal
+To be able to estimate how sure we are that we did find the page where a particular nomenclatural citation exists, we collect several pices of "evidence" that would provide as clues about validity of our assurance.
 
-Then the the altorithm tries to match the year of the input citation with the years of publiation known for all the references.
+In natural language processing such evidences are often called "features", and, as a rule, none of these evidences are an iron-clad indicator of a success.
+We have to collect several types of them and use calculated weights for each of the evidence to make the final judgement.
+The Naive Bayes method assumes that all of these features have no influence on each other. And while some rule do influence each other, from the practical standpoint Naive Bayes classifiers work quite well in many cases.
+
+Now we will describe the evidences we collect to make a decision.
+
+1. Name-string matching
+
+The first step after receiving an input is finding all the References that contain a requested name.
+Such search is performed without synonymy, so it only contains References that contain the name-string.
+
+2. BHL Title's title matching
+
+In the next step the titles of the References are compared with provided citatons.
+We used descirbed earlier title "fingerprints" for a fast matching of citations to the titles of BHL Titles (books, journals etc.).
+
+3. Year matching
+
+The algorithm tries to match the year of the input citation with the years of the found References.
 Note that sometimes the year of BHL Reference is known only approximately, for example if there is only Titile's start and end of publication data are given. Sometimes there is no year information at all.
-The algorithm take in account years that are close to the provided year in the input.
+The algorithm takes in account not only exact matches of a year, but also cases where a Reference year is close to the provided year in the input.
 
-In the next steps
+3. Page numers, volume matching
 
+We use heuristic algorithms to compare given year, volume, page numbers information to match them to References obtained during the first step.
+
+4. Nomenclatural annotations
+
+More often than not, papers describing new species would have a nomenclatural annotation like "sp. nov.", "comb. nov" etc.
+We normalized annotations occured in BHL as described earlier.
+If a name occurance contains such annotation, it is registered as another "evidendce" in favor that the Reference is the nomenclatural one from the citation.
+
+##### Making a decision
+
+Using precalculated weights for the described above "evidences" we derive a total matching score for each Reference.
+After that we are able to sort the references by the score and decide if the top result has a score high enough for being classified as a possible occurance of the citation in BHL.
+
+The value of the score allows us to state a probabiliby of cussessful citation detection in the BHL corpus.
+
+#### Arbitrary references workflow
+
+The workflow for finding of arbitrary refernces is quite similar to the detetection of nomenclatural references.
+The input is identical, and collection of "evidences", scoring and decision making are almost the same.
+The only difference is that we do not take in account nomenclatural annotations located in the vicinity of the name-string.
+
+### Finding
 
 ## Interfaces
 
