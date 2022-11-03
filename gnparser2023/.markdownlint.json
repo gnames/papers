@@ -1,0 +1,7 @@
+{
+"options": {
+"frontMatter": "/^%~(.*[\r\n])*---\s*[\r\n]\s*[\r\n]/m"
+
+}
+}
+
