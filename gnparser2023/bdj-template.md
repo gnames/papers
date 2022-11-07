@@ -58,7 +58,7 @@ This is new
 
 # Keywords
 
-biodiversity, software
+biodiversity informatics, global names, nomenclature, taxonomy, scientific names, parser, PEG
 
 # Classifications
 
@@ -83,11 +83,65 @@ Some background here  [@ICPN] trying to use a ref here. Some more refs
 
 # Project description
 
-Title:
+Tile: GNparser
 
-Study area description: Earth
+Study area description: Biodiversity Informatics
 
 Design description:
+
+## Goals
+
+The goals for GNparser stayed the same for Ruby, Scala and Go implementations:
+
+1. High Quality.
+   A parser should be able to break names into their semantic elements to the same standards that can be achieved by a trained nomenclaturalist or better.
+   This will give users confidence in the automated process and allow them to set aside tedious and expensive manual parsing.
+
+2. Global Scope.
+   A parser should be able to parse all types of scientific names, inclusive of the most complex name-strings such as hybrid formulae, multi-infraspecific names, names with multilevel authorships and so on.
+   No name-strings should be left unparsed, otherwise biological information attached to them may remain undiscoverable.
+
+3. Parsing Completeness.
+   All information included in a name-string is important, not just the canonical form of the scientific name.
+   Authorship, year, rank information allow us to distinguish homonyms, similar names, synonyms, spelling mistakes, or chresonyms.
+   Access to such information improves the performance of subsequent reconciliation (the mapping of all alternative name-strings for the same taxon against each other).
+4. Speed.
+   Users, especially large-scale aggregators of biodiversity data, are more satisfied with speedy processing of data as it allows them to move forward to more purposeful value-adding tasks.
+   Speed reduces the purchasing/operating costs of the hardware used for production parsing.
+5. Accessibility.
+   To be available to the widest possible audience, a parser should be released as a stand-alone program, have good documentation, be able to work as a library, to function as a command line tool, as a tool within a graphical interface, to provide a remotely accessiblle API.
+6. Development community. The code of GNparser should be have jj
+
+The previous version of GNparesr written in Scala was the closest to fulfil these goals.
+However soon we found out that Go language in our case had crucial advantages over Scala.
+We noticed that Go was much easier to learn and faster very easy to deploy.
+The memory footprint for a running application changed from a gigabyte (Scala) to a few megabytes (Go).
+We started to receive important Open Source contributions because the code was easier to understand and modify.
+We found that a talanted developer without prior Go knowledge can start making big contributions to the project in a matter of weeks.
+Several other GNA projects, such as name finding (GNfinder), name reconciliation and resolution (GNverifier) also migrated to Go.
+Go version provided a significant boost in performance.
+Moving to Go allowed us increas development speed about 5-fold, and removed dependency on a particular developer.
+Go binaries are dramatically easier to install.
+Because of that it was logical to make a complete rewrite of GNparser in Go.
+
+## Technical introduction
+
+This implementation of GNparser (as well as previous ones) heavily dependent on Parsing Expression Grammar (PEG) approach to parsing.
+We discussed PEG in more details in the paper about Scala version of GNparser [TODO REF].
+
+PEG provides recursive rules which resemble regular expression.
+The parsing engine is written in a PEGs domain language and much easier to read and understand than pure Regular Expressions.
+
+Here is an example of the
+
+
+## Architecture
+
+## Performance
+
+## Usecases
+
+## Discussion
 
 Funding:
 
