@@ -1,72 +1,67 @@
-Species File Group at INHS participates in several global projects to provide services for biodiversity community.
-Three main such projects are TaxonWorks, a powerful editorial desktop for taxonomists, Global Names, tools for parsing, detecting, resolving scientific names, the Catalogue of Life, a global checklist of known species.
+D. Mozzherin, H. Pereira, M. Yoder, (may be Debbie?)
 
-TaxonWorks is the group's corenerstone service. It was developed using combined expertese of three precursor taxonomic editorial tools Species Files, MX and 3i, all developed by members of SFG group.
-The project matures fast and experiences exponential grouth of data.
-In 2020 the images, and documents stored by Taxonworks occupied 0.3TB of data.
-In 2021 is was already 1.3TB, in 2022 - 2.4 TB.
-In February of 2023 there were already 2.7 TB of data and 6 million file.
+The Species File Group (SFG) at INHS is involved in several global projects that provide services for the biodiversity community.
+Three main projects are TaxonWorks, Catalogue of Life and GlobalNames.
+TaxonWorks is a powerful editorial workbench for taxonomists and collection managers.
+The Catalogue of Life editorial work provides data for the global checklist of known species.
+Global Names provides tools for parsing, detecting, and resolving scientific names.
 
-Quite soon we discowered that dealing with so much data is becoming increasingly difficult.
-Moving data from one computer to another was taking 5 days.
-Making incremental backups was taking up to 3 hours.
-We felt that we are increasingly at risk of loosing integrity of the accumulated data in case of a human mistake, hardware failure, or a disaster at the data center.
-As a result we decided to rethink our strategy and provide technical solutions that would allow us to experience 10-100 fold.
+TaxonWorks is the cornerstone project of our group.
+It was developed by combining the expertise of three precursor taxonomic editorial tools, Species Files, MX, and 3i.
+All of them were developed by members of the SFG group.
+The TaxonWorks project is maturing quickly and experiencing exponential growth of data.
+As of February 2023, TaxonWorks already contained 2.7 TB of data and 6 million files.
 
-Another significant problem we encountered, was the lack of full-time system administrator in the group.
-We run about 50 remotely accessed services on more than 10 computers currently and we need a system that allows us to maintain high day to day availability of our systems.
+However, managing such large amounts of data has become increasingly difficult for us.
+It would take 5 days to transfer data from one computer to another, and making incremental backups would take up to 3 hours.
+We felt that the group is at risk of losing the integrity of the accumulated data in case of human error, hardware failure, or a disaster at the data center.
+To address these issues, we decided to rethink our strategy and provide technical solutions that would allow us to experience a 10-100 fold increase in efficiency.
 
-Our immediate goals were:
+One significant problem we encountered was the lack of a full-time system administrator.
+Currently, we run about 50 remotely accessed services on more than 10 computers.
+Without a designated system administrator we need a system that would allow to maintain high day-to-day availability with minimal effort.
 
-- Fast and reliable integrity check of all the data.
-- Fast and reliable transfer of the data to a new production server or a backup.
-- Ability to distribute backup to several off-site location to amiliorate risks of technological or natural disasters.
-- Achieving fast disaster recovery in case of such disasters.
-- High availability of day to day operations with minimal envolvement in system maintenance.
+Our immediate goals were the following.
+To achieve fast and reliable integrity checks of all the data.
+To be able to efficiently and reliably transfer TaxonWorks files to a new production server or a backup.
+To distribute backups to several off-site locations to mitigate risks of technological or natural disasters.
+To achieve fast disaster recovery in case of such misfortunes.
+To ensure high availability of day-to-day operations with minimal involvement in system maintenance.
 
-On February 20th our group achieved these goals by rebuilding our systems and incorporating new hardware.
-In this blog we want to share our experience and methodologies of the process.
+To achieve these goals, the group acquired dedicated storage hardware, namely DELL's ME1400 for production and MD4012 for backup.
+Both systems, in their current configuration, allow them to scale their storage up to 70TB.
+In addition to hardware, we also needed a new software solution to be able to reliably work with more and more data.
+We chose to use the Open ZFS file system for all our production and backup needs.
 
-First we decided to acquire dedicated storage hardware. We chose DELLs ME1400 for production and MD4012 for backup.
-Both systems in their current configuration allow us to scale our storage up to 70TB.
-However in addition to hardware we also needed a new software solution to be able to reliably work with more and more data.
+ZFS provided us with several very important features.
+The file system checks integrity of every stored byte, and can detect and repare even the smallest data corruption resulted from cosmic rays or a disk failure.
+The speed of data transfer increased more than ten-fold, allowing us to copy 2.7TB in about 4 hours.
+The speed of incremental backups increased hundred-fold, allowing us to send incremental changes in a matter of seconds.
+Fast incremental backups now allow us to sync data remotely quickly, even if the remote place has slow internet.
 
-We chose to us ZFS filesystem for all our production and backup needs.
-ZFS was originally developed by Sun Solaris and is used by data centers to operate on multi-petabyte scale1.
-This file system provided us with several very important for us features.
+To achieve high availability of our services and still keep system management within working hours and with only 1-2 hours/week system administration involvement, we automated our workflow.
+We used Ansible infrastructure automation tool and Kubernetes computer cluster management as our two main software components.
+We used Git revision control system to distribute Ansible environment between system administrators.
+With most of the infrastructure construction tasks automated, the group saved time and resources.
 
-- every stored byte is accounted in metadata, and even smallest change in data due to cosmic rays or a disk failure can be detected and repaired.
-- the speed of data transfer increased hundred-fold and allowing us to copy 2.7TB in about 4 hours.
-- the speed of incremental backups increased thousand-fold allowing to send incremental changes in a matter of seconds.
-- fast incremental backups now allows us to sync data remotely fast even if remote place has 100Bits/sec slow internet.
+A Kubernetes cluster automates the maintenance of our services and ensures high availability for our users.
+It monitors the services and restores them automatically if they break.
+Kubernetes also has self-healing capabilities, so if the system itself experiences issues, it fixes them automatically.
 
-We organize remote backups in such way, that the backup is self-sufficient and can be installed in a matter of hours on a off the shelf PC to serve TaxonWorks and GN data temporary.
+For over five years, we have utilized Kubernetes and Ansible, which have significantly streamlined the deployment of our services.
+This automated workflow has provided us with a flexible and user-friendly environment to make changes in our system, freeing up our time for projects development.
 
-To achieve high availability of our services and still keeping system management within working hours and with only 1-2 hours/week system administration involvement we automated our services.
-Two main software components we use are Ansible infrastructure automation tool and Kubernetes computer cluster management.
-We use Git revision control system to distribute Ansible environment between system administrators.
-This environment allows us to destroy and rebuild Kubernetes computer claster automatically.
-With most of our infrastructure construction tasks automated saves us massive amount of time and resources.
+Our group generates exclusively Open Sourced projects, and for system software we also prefer such solutions.
+All described above tools are released as Open Source.
 
-Kubernetes cluster is a system that automates the maintenance of all our services and provides high availability for our users.
-It monitors the services, and when it detects that they are broken, it automatically restores them back.
-Kubernetes also has self-healing capabilities, and if something goes bad with the system itself the system fixes the problem automatically.
+Now that we have achieved our goals, we plan to increase data safety in the future.
+One major problem with computer technology is its volatility.
+Storage hardware solutions degrade over time and may become technologically obsolete.
+As a result, it is essential to actively transfer data to keep it alive.
+The data about species and taxonomy are critical for future generations.
+So, how can we preserve this perishable data for science?
 
-We Kubernetes and Ansible for more than 5 years now and they helped us dramatically to ease deployment of our services.
-This automated workflow provides us very flexible and friendly environment to make changes in our system and frees our time for development of our projects.
-
-Now, that we achieved our goals, we have plans to further increase data safety in the future.
-
-One big problem with computer technology is its volatility.
-Storage hardware solutions degrade with time and/or become technologically obsolete.
-As a result only through atvie involvement of transferring data we accumulated so far we can keep it alive.
-However, information about species, taxonomy would be really important for the future generations.
-How can we preserve this perishable data for science?
-
-Printing press technology gave us access to biological data published by 250 years ago by Carl Linnaeus.
-The taxomic data we accumulate today need to be shared 250 years in the future.
-However the massive scale of todays data does not allow it to be published as dead tree books anymore.
-We are developing workflows and approaches that, will, we hope, allow to make work of collections and taxonomists be availabe a few centuries later.
-
-
-
+Printing press technology gave us access to biodiversity information published 250 years ago by Carl Linnaeus.
+The taxonomic data we accumulate today needs to be accessible 250 years from now.
+However, the massive scale of today's data makes it impossible to publish as dead tree books.
+Therefore, we are developing workflows and approaches that we hope will enable collections and taxonomists' work to be accessible centuries later.
