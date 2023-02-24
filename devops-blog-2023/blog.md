@@ -1,37 +1,48 @@
 D. Mozzherin, H. Pereira, M. Yoder, (may be Debbie?)
 
-The Species File Group (SFG) at INHS is involved in several global projects that provide services for the biodiversity community.
-Three main projects are TaxonWorks, Catalogue of Life and GlobalNames.
-TaxonWorks is a powerful editorial workbench for taxonomists and collection managers.
-The Catalogue of Life editorial work provides data for the global checklist of known species.
-Global Names provides tools for parsing, detecting, and resolving scientific names.
+NEED A CATCHY TITLE.  
 
-TaxonWorks is the cornerstone project of our group.
-It was developed by combining the expertise of three precursor taxonomic editorial tools, Species Files, MX, and 3i.
-All of them were developed by members of the SFG group.
-The TaxonWorks project is maturing quickly and experiencing exponential growth of data.
-As of February 2023, TaxonWorks already contained 2.7 TB of data and 6 million files.
+Supporting Exponential Data Growth
+Ensuring Long-lived Data and Knowledge
+Data Leadership Supporting Exponential Data Growth
+Data Leadership in Support of Sustaining Exponential Data Growth
+Making Long-lived Information a Reality: data leadership needed
+Data Leadership Now to Support Exponential Data Growth
+... please ... add yours ...
 
-However, managing such large amounts of data has become increasingly difficult for us.
-It would take 5 days to transfer data from one computer to another, and making incremental backups would take up to 3 hours.
-We felt that the group is at risk of losing the integrity of the accumulated data in case of human error, hardware failure, or a disaster at the data center.
-To address these issues, we decided to rethink our strategy and provide technical solutions that would allow us to experience a 10-100 fold increase in efficiency.
+The [Species File Group (SFG)](https://speciesfilegroup.org/) at INHS leads several global projects that provide services for the biodiversity community.
+Three main projects are TaxonWorks, Catalogue of Life, and GlobalNames.
+[TaxonWorks](https://taxonworks.org/) offers a powerful editorial workbench for taxonomists and collection managers.
+The [Catalogue of Life](https://www.catalogueoflife.org/) editorial work results in data critical for the global checklist of known species.
+[Global Names](https://globalnames.org/) provides flexible tools for parsing, detecting, and resolving scientific names.
 
-One significant problem we encountered was the lack of a full-time system administrator.
-Currently, we run about 50 remotely accessed services on more than 10 computers.
-Without a designated system administrator we need a system that would allow to maintain high day-to-day availability with minimal effort.
+TaxonWorks serves as the cornerstone project of our group.
+It was developed by combining the expertise of three precursor taxonomic editorial tools: Species Files, MX, and 3i.
+All of them were developed by members of the SFG.
+Maturing quickly, the TaxonWorks project is experiencing _exponential growth of data_. [GRAPH HERE DIMA? FROM YOUR SLIDE DECK?]
+As of February 2023, TaxonWorks already contained 2.7 TB of data and 6 million files (see graph). 
 
-Our immediate goals were the following.
-To achieve fast and reliable integrity checks of all the data.
-To be able to efficiently and reliably transfer TaxonWorks files to a new production server or a backup.
-To distribute backups to several off-site locations to mitigate risks of technological or natural disasters.
-To achieve fast disaster recovery in case of such misfortunes.
-To ensure high availability of day-to-day operations with minimal involvement in system maintenance.
+Managing such large amounts of data has become increasingly difficult for us.
+For example, it would take 5 days to transfer our total data from one computer to another. Making incremental backups would take up to 3 hours. 
+With these insights, we knew we must thoughtfully evaluate our current needs and methods for caring for this information and knowledge in the short and longer-term. 
+We concluded that the group is at risk of losing the integrity of the accumulated data in case of human error, hardware failure, or a disaster at the data center.
+To address the growth rate and risks noted, we decided to rethink our strategy and provide technical solutions that would allow us to experience a 10-100 fold increase in efficiency.  
+
+One significant problem we encountered was the lack of a person with the specific role of full-time system administrator. 
+Thankfully, our team has the combined data leadership expertise to evaluate options, test them, and implement a new way forward.
+Currently, we run about 50 remotely accessed services on more than 10 computers. [SERVING HOW MANY PEOPLE? can we estimate?]  Without a designated system administrator we needed a system that would allow us to maintain high day-to-day availability with minimal human effort.
+
+Our immediate goals were to:
+- achieve fast and reliable integrity checks of all the data.
+- be able to efficiently and reliably transfer TaxonWorks files to a new production server or a backup.
+- distribute backups to several off-site locations to mitigate risks of technological or natural disasters.
+- realize fast disaster recovery in case of such misfortunes.
+- ensure high availability of day-to-day operations with minimal involvement in system maintenance.
 
 To achieve these goals, the group acquired dedicated storage hardware, namely DELL's ME1400 for production and MD4012 for backup.
 Both systems, in their current configuration, allow them to scale their storage up to 70TB.
 In addition to hardware, we also needed a new software solution to be able to reliably work with more and more data.
-We chose to use the Open ZFS file system for all our production and backup needs.
+We chose to use the [Open ZFS file system](https://openzfs.org/wiki/Main_Page) for all our production and backup needs.
 
 ZFS provided us with several very important features.
 The file system checks integrity of every stored byte, and can detect and repare even the smallest data corruption resulted from cosmic rays or a disk failure.
@@ -60,8 +71,9 @@ Storage hardware solutions degrade over time and may become technologically obso
 As a result, it is essential to actively transfer data to keep it alive.
 The data about species and taxonomy are critical for future generations.
 So, how can we preserve this perishable data for science?
+We note that what we accomplished, without a dedicated system's administrator, requires a team approach, now and in the future, if we want our future selves to be thankful for the steps taken by our past selves. 
 
 Printing press technology gave us access to biodiversity information published 250 years ago by Carl Linnaeus.
 The taxonomic data we accumulate today needs to be accessible 250 years from now.
-However, the massive scale of today's data makes it impossible to publish as dead tree books.
-Therefore, we are developing workflows and approaches that we hope will enable collections and taxonomists' work to be accessible centuries later.
+However, the massive and increasing scale of today's data makes it impossible to publish as dead tree books.
+Therefore, we are developing workflows and approaches that we hope will enable collections and taxonomists' work to be accessible centuries later. 
