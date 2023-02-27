@@ -1,6 +1,6 @@
 D. Mozzherin, H. Pereira, M. Yoder, (may be Debbie?)
 
-Dealing with an Exponential Data Grouth in TaxonWorks.
+# Dealing with an Exponential Data Grouth
 
 The [Species File Group (SFG)](https://speciesfilegroup.org/) at INHS leads several global projects that provide services for the biodiversity community.
 Three main projects are TaxonWorks, Catalogue of Life, and GlobalNames.
@@ -13,7 +13,7 @@ It was developed by combining the expertise of three precursor taxonomic editori
 All of them were developed by members of the SFG.
 Maturing quickly, the TaxonWorks project is experiencing _exponential growth of data_.
 
-[!TaxonWorks Data Growth](tw-data.png).
+<img src="./tw-data.png" alt="TaxonWorks Data Growth" width="400" />
 
 As of February 2023, TaxonWorks already contained 2.7 TB of data and 6 million files (see graph).
 
@@ -47,7 +47,7 @@ The speed of incremental backups increased hundred-fold, allowing us to send inc
 Fast incremental backups now allow us to sync data remotely quickly, even if the remote place has slow internet.
 
 To achieve high availability of our services and still keep system management within working hours and with only 1-2 hours/week system administration involvement, we automated our workflow.
-We used Ansible infrastructure automation tool and Kubernetes computer cluster management as our two main software components.
+We used [Ansible](https://www.ansible.com/) infrastructure automation tool and [Kubernetes](https://kubernetes.io/) computer cluster management as our two main software components.
 We used Git revision control system to distribute Ansible environment between system administrators.
 With most of the infrastructure construction tasks automated, the group saved time and resources.
 
