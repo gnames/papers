@@ -6,9 +6,9 @@ D. Mozzherin, H. Pereira, M. Yoder, (may be Debbie?)
 
 ## Summary
 
-Species File Group (SFG) at INHS experienced a rapid growth of the data for TaxonWorks project.
-Moving or backing up 6 million files with a total size about 3TB became slow and the risk of loosing data integrity grew high.
-SFG team used several Open Source solutions (OpenZFS, Kubernetes, Ansible) to ameliorate the difficulties and automate the process of system administration.
+The Species File Group (SFG) at INHS has experienced rapid growth in the amount of data for the TaxonWorks project.
+Moving or backing up 6 million files with a total size of about 3TB has become slow, and the risk of losing data integrity has grown high.
+To address these challenges and automate the process of system administration, the SFG team used several open-source solutions, including OpenZFS, Kubernetes, and Ansible.
 
 ----
 
