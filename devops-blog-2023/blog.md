@@ -2,6 +2,16 @@ D. Mozzherin, H. Pereira, M. Yoder, (may be Debbie?)
 
 # Dealing with an Exponential Data Grouth
 
+-----
+
+## Summary
+
+Species File Group (SFG) at INHS experienced a rapid growth of the data for TaxonWorks project.
+Moving or backing up 6 million files with a total size about 3TB became slow and risk of loosing data integrity grew high.
+SFG team used several Open Source solutions (OpenZFS, Kubernetes, Ansible) to ameliorate the difficulties and automate the process of system administration.
+
+----
+
 The [Species File Group (SFG)](https://speciesfilegroup.org/) at INHS leads several global projects that provide services for the biodiversity community.
 Three main projects are TaxonWorks, Catalogue of Life, and GlobalNames.
 [TaxonWorks](https://taxonworks.org/) offers a powerful editorial workbench for taxonomists and collection managers.
@@ -15,7 +25,7 @@ Maturing quickly, the TaxonWorks project is experiencing _exponential growth of 
 
 <img src="./tw-data.png" alt="TaxonWorks Data Growth" width="400" />
 
-As of February 2023, TaxonWorks already contained 2.7 TB of data and 6 million files (see graph).
+As of February 2023, TaxonWorks already contained 2.9 TB of data and 6 million files (see graph).
 
 Managing such large amounts of data has become increasingly difficult for us.
 For example, it would take 5 days to transfer our total data from one computer to another. Making incremental backups would take up to 3 hours.
@@ -42,7 +52,7 @@ We chose to use the [Open ZFS file system](https://openzfs.org/wiki/Main_Page) f
 
 ZFS provided us with several very important features.
 The file system checks integrity of every stored byte, and can detect and repare even the smallest data corruption resulted from cosmic rays or a disk failure.
-The speed of data transfer increased more than ten-fold, allowing us to copy 2.7TB in about 4 hours.
+The speed of data transfer increased more than ten-fold, allowing us to copy 2.9TB in about 4 hours.
 The speed of incremental backups increased hundred-fold, allowing us to send incremental changes in a matter of seconds.
 Fast incremental backups now allow us to sync data remotely quickly, even if the remote place has slow internet.
 
