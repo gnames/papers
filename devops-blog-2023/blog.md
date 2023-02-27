@@ -51,7 +51,7 @@ In addition to hardware, we also needed a new software solution to be able to re
 We chose to use the [Open ZFS file system](https://openzfs.org/wiki/Main_Page) for all our production and backup needs.
 
 ZFS provided us with several very important features.
-The file system checks integrity of every stored byte, and can detect and repare even the smallest data corruption resulted from cosmic rays or a disk failure.
+The file system checks integrity of every stored byte, and can detect and repair even the smallest data corruption resulting from cosmic rays or a disk failure.
 The speed of data transfer increased more than ten-fold, allowing us to copy 2.9TB in about 4 hours.
 The speed of incremental backups increased hundred-fold, allowing us to send incremental changes in a matter of seconds.
 Fast incremental backups now allow us to sync data remotely quickly, even if the remote place has slow internet.
@@ -66,7 +66,7 @@ It monitors the services and restores them automatically if they break.
 Kubernetes also has self-healing capabilities, so if the system itself experiences issues, it fixes them automatically.
 
 For over five years, we have utilized Kubernetes and Ansible, which have significantly streamlined the deployment of our services.
-This automated workflow has provided us with a flexible and user-friendly environment to make changes in our system, freeing up our time for projects development.
+This automated workflow has provided us with a flexible and user-friendly environment to make changes in our system, freeing up our time for projects' development.
 
 Our group generates exclusively Open Sourced projects, and for system software we also prefer such solutions.
 All described above tools are released as Open Source.
