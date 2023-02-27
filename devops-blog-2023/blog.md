@@ -1,6 +1,6 @@
 D. Mozzherin, H. Pereira, M. Yoder, (may be Debbie?)
 
-# Dealing with an Exponential Data Grouth
+# Dealing with an Exponential Data Growth
 
 -----
 
@@ -33,7 +33,7 @@ With these insights, we knew we must thoughtfully evaluate our current needs and
 We concluded that the group is at risk of losing the integrity of the accumulated data in case of human error, hardware failure, or a disaster at the data center.
 To address the growth rate and risks noted, we decided to rethink our strategy and provide technical solutions that would allow us to experience a 10-100 fold increase in efficiency.
 
-Historicatlly, our group lacks a full-time system administrator, and this role is distributed between several developers.
+Historically, our group lacks a full-time system administrator, and this role is distributed between several developers.
 Currently, we run about 50 remotely accessed services on more than 10 computers.
 Without a designated system administrator we needed a system that would allow us to maintain high day-to-day availability with minimal human effort.
 
@@ -58,7 +58,7 @@ Fast incremental backups now allow us to sync data remotely quickly, even if the
 
 To achieve high availability of our services and still keep system management within working hours and with only 1-2 hours/week system administration involvement, we automated our workflow.
 We used [Ansible](https://www.ansible.com/) infrastructure automation tool and [Kubernetes](https://kubernetes.io/) computer cluster management as our two main software components.
-We used Git revision control system to distribute Ansible environment between system administrators.
+We used the Git revision control system to distribute Ansible environments between system administrators.
 With most of the infrastructure construction tasks automated, the group saved time and resources.
 
 A Kubernetes cluster automates the maintenance of our services and ensures high availability for our users.
