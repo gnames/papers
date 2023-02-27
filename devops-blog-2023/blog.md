@@ -1,4 +1,4 @@
-D. Mozzherin, H. Pereira, M. Yoder, (may be Debbie?)
+D. Mozzherin, H. Pereira, M. Yoder, D. Paul
 
 # Dealing with an Exponential Data Growth
 
