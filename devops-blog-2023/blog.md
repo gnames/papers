@@ -36,7 +36,7 @@ Without a designated system administrator we needed a system that would allow us
 
 Our immediate goals were to:
 
-- chieve fast and reliable integrity checks of all the data
+- achieve fast and reliable integrity checks of all the data
 - be able to efficiently and reliably transfer TaxonWorks files to a new production server or a backup
 - distribute backups to several off-site locations to mitigate risks of technological or natural disasters
 - realize fast disaster recovery in case of such misfortunes
@@ -76,7 +76,7 @@ The data about species and taxonomy we and our collaborators are producing are c
 So, how can we preserve this perishable data for science?
 We note that what we accomplished, without a dedicated system's administrator, requires a team approach _and_ top level people capable of multiple technical roles. Relaying the skills and knowledge behind these activities forward to our future selves, replacements, and administrators is a major challenge, one we hope to address in part by documenting efforts like this.
 
-Printing press technology gave us access to biodiversity information published 250 years ago by Carl Linnaeus. 
+Printing press technology gave us access to biodiversity information published 250 years ago by Carl Linnaeus.
 However, the massive and increasing scale of today's data makes it impossible to publish as dead tree books.
 The taxonomic data we accumulate now needs to be accessible 250 years from now, fully integrated in the science of the researchers and collections they serve then.
 We hope that the workflows and approaches we develop now, with an open-science approach at their core, will enable the knowledge we currently produce to be accessible in the centuries that follow.
