@@ -6,7 +6,7 @@ D. Mozzherin, H. Pereira, M. Yoder, D. Paul
 
 ## Summary
 
-The Species File Group (SFG) at INHS are experiencing rapid growth in the amount of data their collaborators are adding to TaxonWorks.
+The Species File Group (SFG) at INHS is experiencing rapid growth in the amount of data their collaborators are adding to TaxonWorks.
 Moving or backing up 6 million files with a total size of about 3TB has become slow, and the risk of losing data integrity has grown high.
 To address these challenges and automate the process of system administration, the SFG team used several open-source solutions, including OpenZFS, Kubernetes, and Ansible.
 
@@ -64,6 +64,7 @@ Kubernetes also has self-healing capabilities, so if the system itself experienc
 
 For over five years, we have utilized Kubernetes and Ansible, which have significantly streamlined the deployment of our services.
 This automated workflow has provided us with a flexible and user-friendly environment to make changes in our system, freeing up our time for projects' development.
+We note that what we accomplished, without a dedicated system's administrator, requires a team approach _and_ top level people capable of multiple technical roles. Relaying the skills and knowledge behind these activities forward to our future selves, replacements, and administrators is a major challenge, one we hope to address in part by documenting efforts like this.
 
 Our group generates exclusively Open Sourced projects, and for system software we also prefer such solutions.
 All described above tools are released as Open Source.
@@ -74,7 +75,6 @@ Storage hardware solutions degrade over time and may become technologically obso
 As a result, it is essential to actively transfer data to keep it alive.
 The data about species and taxonomy we and our collaborators are producing are critical for future generations.
 So, how can we preserve this perishable data for science?
-We note that what we accomplished, without a dedicated system's administrator, requires a team approach _and_ top level people capable of multiple technical roles. Relaying the skills and knowledge behind these activities forward to our future selves, replacements, and administrators is a major challenge, one we hope to address in part by documenting efforts like this.
 
 Printing press technology gave us access to biodiversity information published 250 years ago by Carl Linnaeus.
 However, the massive and increasing scale of today's data makes it impossible to publish as dead tree books.
