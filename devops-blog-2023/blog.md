@@ -22,7 +22,7 @@ Maturing quickly, the TaxonWorks project is experiencing an _exponential growth 
 
 <img src="./tw-data.png" alt="TaxonWorks Data Growth" width="400" />
 
-As of February 2023, TaxonWorks already contained 2.9 TB of data and 6 million files (see graph).
+As of February 2023, TaxonWorks already contained 3 TB of data and 6 million files (see graph).
 
 Managing such large amounts of data has become increasingly difficult for us.
 For example, it would take 5 days to transfer our total data from one computer to another. Making incremental backups would take up to 3 hours.
@@ -42,7 +42,7 @@ Our immediate goals were to:
 - realize fast disaster recovery in case of such misfortunes
 - ensure high availability of day-to-day operations with minimal involvement in system maintenance
 
-To achieve these goals, the group acquired dedicated storage hardware, namely DELL's ME1400 for production and MD4012 for backup.
+To achieve these goals, the group acquired dedicated storage hardware, namely DELL's MD1400 for production and ME4012 for backup.
 Both systems, in their current configuration, allow them to scale their storage up to 70TB.
 In addition to hardware, we also needed a new software solution to be able to reliably work with our increasing data.
 We chose to use the [Open ZFS file system](https://openzfs.org/wiki/Main_Page) for all our production and backup needs.
