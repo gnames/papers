@@ -49,7 +49,7 @@ We chose to use the [Open ZFS file system](https://openzfs.org/wiki/Main_Page) f
 
 ZFS provided us with several very important features.
 The file system checks integrity of every stored byte, and can detect and repair even the smallest data corruption resulting from cosmic rays or a disk failure.
-The speed of data transfer increased more than ten-fold, allowing us to copy 2.9TB in about 4 hours.
+The speed of data transfer increased more than ten-fold, allowing us to copy 3TB in about 4 hours.
 The speed of incremental backups increased hundred-fold, allowing us to send incremental changes in a matter of seconds.
 Fast incremental backups now allow us to sync data remotely quickly, even if the remote place has slow internet.
 
