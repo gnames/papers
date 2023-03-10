@@ -64,7 +64,8 @@ Kubernetes also has self-healing capabilities, so if the system itself experienc
 
 For over five years, we have utilized Kubernetes and Ansible, which have significantly streamlined the deployment of our services.
 This automated workflow has provided us with a flexible and user-friendly environment to make changes in our system, freeing up our time for projects' development.
-We note that what we accomplished, without a dedicated system's administrator, requires a team approach _and_ top level people capable of multiple technical roles. Relaying the skills and knowledge behind these activities forward to our future selves, replacements, and administrators is a major challenge, one we hope to address in part by documenting efforts like this.
+We note that what we accomplished, without a dedicated system's administrator, requires a team approach _and_ top level people capable of multiple technical roles.
+Relaying the skills and knowledge behind these activities forward to our future selves, replacements, and administrators is a major challenge, one we hope to address in part by documenting efforts like this.
 
 Our group generates exclusively Open Sourced projects, and for system software we also prefer such solutions.
 All described above tools are released as Open Source.
