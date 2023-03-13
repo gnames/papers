@@ -14,7 +14,7 @@ To address these challenges and automate the process of system administration, t
 
 The [Species File Group (SFG)](https://speciesfilegroup.org/) at INHS is at the heart of several efforts that provide services for the global biodiversity community.  These include TaxonWorks, Catalogue of Life, and GlobalNames.
 [TaxonWorks](https://taxonworks.org/) offers a powerful workbench to taxonomists, biodiversity scientists, and collection managers who collectively describe life on Earth. The [Catalogue of Life](https://www.catalogueoflife.org/) provides the most rigorous checklist of the Earth's species available, we are key to its editing and data-pipeline management.
-[Global Names](https://globalnames.org/) creates fast and flexible tools for the parsing, detecting, and resolving of scientific names and powers up the [Biodiversity Heritage Library](https://www.biodiversitylibrary.org)'s name index.
+[Global Names](https://globalnames.org/) creates fast and flexible tools for the parsing, detecting, and resolving of scientific names, and powers up the [Biodiversity Heritage Library](https://www.biodiversitylibrary.org)'s name index.
 
 TaxonWorks serves as the cornerstone project of our group. It is a 3rd generation tool developed by combining the decades of experience behind the expertise of three precursor taxonomic editorial tools: Species Files, MX, and 3i.
 All of them were developed by members of the SFG.
