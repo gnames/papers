@@ -7,13 +7,13 @@ The data accumulated by them is also growing rapidly, often exponentially.
 Most of these projects start small and do not give much thought to the data architecture.
 However, over time, the data may increase in size to such an extent that handling and preserving it becomes an almost insurmountable problem.
 The most common challenges include migrating data from one data storage to another, organizing backups, providing fast disaster recovery, and preparing data to be accessible for posterity.
-The biodiversity data collected today will be indispensable for future research, and it is our responsibility to preserve it for future generations.
+The biodiversity data collected today will be indispensable for future research, and it is our responsibility to preserve it for next generations.
 
 Some of the most common risk factors are the end of funding, retirement of a researcher, or the departure of a critical researcher or programmer.
 Hardware dysfunction, hurricanes, tornadoes, and severe magnetic storms are risks that could destroy the data carefully collected by large groups of people.
 
-The nature of electronic publishing creates a "Bibliotheca Alexandrina effect" where a massive amount of data exists in only one location.
-The disappearance of the data in this location leads to data loss.
+The nature of electronic publishing creates a "Bibliotheca Alexandrina effect" where a massive amount of data is used widely, but exists in only one location.
+The disappearance of the data in this location leads to a permanent data loss and is an estitential threat to the project.
 
 Biodiversity data becomes more valuable over time and should survive for several centuries.
 However, SSD and HDD storage solutions have an expiration date of only a few years.
@@ -22,7 +22,7 @@ We propose the following solutions to provide data robustness and resilience:
 1. Use time-based file storage.
 
 Most of the biodiversity "Big data" are files that are written once and never changed again.
-We suggest separate storage into a read-only part and small read/write sections.
+We suggest to separate storage into a read-only part and small read/write sections.
 Data from the read/write section migrates to the read-only part often, for example, daily.
 
 2. Use a Copy-On-Write file system, such as ZFS.
@@ -44,4 +44,4 @@ Data written on such disks does not deteriorate for hundreds of years.
 The storage does not depend on magnetic properties and is impervious to electromagnetic disasters.
 Optical disks can be easily and cheaply copied and distributed to libraries worldwide.
 
-Implementing these suggestions will ensure the survival of the data for hundreds of years to come.
+Implementing these suggestions will ensure the survival of the data and accompanying software for hundreds of years to come.
