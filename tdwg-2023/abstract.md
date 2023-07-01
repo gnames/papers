@@ -4,7 +4,7 @@ D. Mozzherin, D. Paul
 
 We are witnessing a fast proliferation of biodiversity informatics projects.
 The data accumulated by these initiatives often grows rapidly, even exponentially.
-Most of these projects start small and may not have the optimal data architecture in place.
+Most of these projects start small and do not foresee data achitecture challenges of their future.
 Organizations may lack the necessary expertise and or money to strategically address the care and feeding of this expanding data pile. 
 In other cases, individuals with the expertise to address these needs may be present but lack the power or status to take effective actions.
 Over time, the data may increase in size to such an extent that handling and preserving it becomes an almost insurmountable problem.
@@ -22,7 +22,7 @@ Biodiversity data becomes more valuable over time and should survive for several
 However, SSD (solid-state drive) and HDD (hard disk drive) storage solutions have an expiration date of only a few years.
 We propose the following solutions to provide data robustness and resilience:
 
-# Technical tactics
+## Technical tactics
 
 1. Use time-based file storage.
 
@@ -34,7 +34,7 @@ Data from the read/write section migrates to the read-only part often, for examp
 
 ZFS allows incremental backups and much faster data transfer than other file systems.
 It allows performing backups using distributed locations (different cities or even countries).
-Regular backups can work even with slow internet connections.
+Regular incremental backups can work even with slow internet connections.
 ZFS provides real-time data integrity checks and uses powerful tools for data healing.
 
 3. Split data and its backups into smaller chunks.
@@ -49,7 +49,8 @@ Data written on such disks does not deteriorate for hundreds of years.
 The storage does not depend on magnetic properties and is impervious to electromagnetic disasters.
 Optical disks can be easily and cheaply copied and distributed to libraries worldwide.
 
-# Sociotechnical insights
+## Sociotechnical insights
+
 The above examples of a collective strategy to preserve data epitomize "LOCKSS" (that is, lots of copies keep stuff safe) and make it clear that these copies need to be in varying formats.
 Many groups and individuals experience needing to address and plan for preventing the potential data loss situations we describe in this talk at various scales (e.g. an individual's own project, to the Global Biodiversity Information Facility (GBIF)).
 Many of us will note we often look to see how others address these data needs.
