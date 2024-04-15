@@ -2,13 +2,17 @@
 title: Paper generation via Pandoc
 author: John Doe, Jane Doe
 date: 2021-10-27
-csl: refs.csl
+geometry: "left=2cm,right=2cm,top=2cm,bottom=2cm"
 bibliography: refs.bib
-geometry: margin=2cm
-header-includes:
-  - \hypersetup{colorlinks=false,
-    allbordercolors={0.6 0.6 1},
-    pdfborderstyle={/S/U/W 0.5}}
+csl: refs.csl
+mainfont: DejaVuSerif.ttf
+mainfontoptions:
+- BoldFont=DejaVuSerif-Bold.ttf
+- ItalicFont=DejaVuSerif-Italic.ttf
+- BoldItalicFont=DejaVuSerif-BoldItalic.ttf
+sansfont: DejaVuSans.ttf
+monofont: DejaVuSansMono.ttf
+output: pdf_document
 ---
 
 # Abstract
@@ -17,8 +21,20 @@ Lorem ipsum
 
 # 1. Background
 
-Some background here  [@ICPN] trying to use a ref here. Some more refs
-[@Kluyver2013;@ICZN;@ICTV] and then again ref [@ICPN;@FNA2002].
+\begin{tabular}{|l|l|}\hline
+Age & Frequency \\ \hline
+18--25  & 15 \\
+26--35  & 33 \\
+36--45  & 22 \\ \hline
+\end{tabular}
+
+\begin{}
+\nocite{ICPN}
+\nocite{FNA2002}
+\end{}
+
+::: {#refs}
+:::
 
 # Acknowledgements
 
