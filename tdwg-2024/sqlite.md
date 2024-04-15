@@ -14,6 +14,7 @@ The SQLite creates database located in just one file, that can be easily exchang
 Its fast database engine is able comfortably work with terabytes of data.
 The developers of SQLite promised to keep binary and text versions of SQLite files backward compatibe up to the year 2050.
 All popular programming languages have libraries to connect to SQLite database and operate with its data using SQL query language.
+Library of Congres of the United States recommends using SQLite format together with XML and JSON as a data-archival solution.
 
 Using SQLite for biodiversity data exchange can be an exciting new opprotunity, where data can be easily queried, imported and exported in a standard way.
 No need to write parsers to access the data.
