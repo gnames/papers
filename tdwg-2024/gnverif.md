@@ -21,5 +21,5 @@ Many people already use OpenRefine for their other reconciliation needs, and inc
 This solution has its negative sides as well.
 OpenRefine reconciles names one by one, as a result reconciliation is quite slow.
 While basic reconciliation is standard by design, extended options have much flexibility.
-Nevertheless, we thing OpenRefine would be a significan step forward standardization between name-reconciliation tools.
+Nevertheless, we thing OpenRefine would be a significant step forward towards the standardization of the scientific name-reconciliation tools.
 
